@@ -1,5 +1,7 @@
 package a_java基础知识点;
 
+import java.io.Closeable;
+
 public class c_异常处理 {
 	//首先自定以异常类  必须带一个带有String参数类型的构造参数
 	class ChushulingException extends Exception {
@@ -71,5 +73,26 @@ public class c_异常处理 {
 	 * 
 	 * 4.方法解释 getMessage() //输出异常的信息 printStackTrace() //输出导致异常更为详细的信息 
 	 */
-
+	
+	
+	//引申 java7--- 自动关闭资源  --- 待关闭的资源必须实现AutoCloseable或者Closeable接口  实现其中的close()方法
+	class Auto implements AutoCloseable{
+		@Override
+		public void close() throws Exception {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
+	//之后 当使用try-catch-finally 将会自动的添加 关闭资源的方法
+	public void hehe() {
+		try {
+			Auto ceshi = new Auto();
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	//之后将会自动的调用ceshi的close方法
 }
