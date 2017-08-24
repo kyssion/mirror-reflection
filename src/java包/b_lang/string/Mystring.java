@@ -1,5 +1,6 @@
 package java包.b_lang.string;
 
+import java.io.StringBufferInputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.StringTokenizer;
 
@@ -78,5 +79,29 @@ public class Mystring {
 		boolean b = stringTokenizer.hasMoreTokens();//返回是否还有字符串没有被分割
 		String string =stringTokenizer.nextToken(";");//返回字符串中的下一个标记 如果是空 就返回默认的字符串
 		
+	}
+	public void method3() {
+		//stringbuffer--线程安全 he StringBuilder--非线程安全 api相同
+		StringBuffer stringBuffer = new StringBuffer();
+		stringBuffer.append("xx");
+		stringBuffer.length();
+		stringBuffer.charAt(0);//返回指定位置上的字符
+		stringBuffer.codePointAt(0);//返回指定位置的Unicode字符
+		stringBuffer.delete(0, 3);//区间删除
+		stringBuffer.deleteCharAt(3);//删除指定位置的字符
+		stringBuffer.append(1);//数组拼接各种东西返回stringbuffer
+		stringBuffer.appendCodePoint(123);//天际unicode编码
+		stringBuffer.getChars(0, 3,aaa,4);//将从0-3拷贝至aaa 4之后
+		stringBuffer.chars();//返回对应string类型的一个数据流
+		stringBuffer.indexOf("sdf", 0);//返回指定的字符串在从0开始搜索的位置
+		stringBuffer.lastIndexOf("",0);
+		stringBuffer.insert(0, "2", 0, 3);//在0插入从0-3的“2”字符串
+		stringBuffer.subSequence(0, 12);//截取返回charsqures
+		stringBuffer.reverse();//反转顺序
+		stringBuffer.replace(0, 4, "123");//从0-4替换成123;
+		stringBuffer.setCharAt(0, '3');//插入字符
+		Character character= new Character('c');
+		Character.toLowerCase('c');
+		Character.toUpperCase('a');
 	}
 }
