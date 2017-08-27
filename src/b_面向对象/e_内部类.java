@@ -1,7 +1,5 @@
 package b_面向对象;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
 //内部类
 public class e_内部类 {
 	public static void main(String[] arg) {

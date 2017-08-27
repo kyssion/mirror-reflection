@@ -87,20 +87,20 @@ public class i_反射机制 {
 		accessibleObject.getAnnotation(hehehe.class);
 		accessibleObject.getAnnotations();
 		accessibleObject.setAccessible(true);//!!!---设置当前东西的访问性--- 设置为true的时候将可以实现对私有变量的
+		//accessibleObject.setAccessible(new String(){"1"}, flag);
 		//construction 注解类型---  注解表示构造方法生成的类型
 		Constructor<?> constructor = (Constructor<Integer>) new Integer(12).getClass().getConstructor(Integer.class);
 		constructor=class1.getConstructor(Integer.class,String.class);
-		//1.---有关注解的方法---继承自父类
+		//---有关注解的方法---继承自父类
 			//特殊的注解方法
-			Annotation[][] annotation = constructor.getParameterAnnotations();//返回二维数组 第一维表示构造函数 第二位表示 注释类型--因为一个类可能有多个构造函数
-			Annotation[] annotations3=constructor.getAnnotations();
-			constructor.getDeclaringClass();//表明生成这个对象所对应的类
+		Annotation[][] annotation = constructor.getParameterAnnotations();//返回二维数组 第一维表示构造函数 第二位表示 注释类型--因为一个类可能有多个构造函数
+		Annotation[] annotations3=constructor.getAnnotations();
+		constructor.getDeclaringClass();//表明生成这个对象所对应的类
 		constructor.getName();//	返回构造函数的名称
 		//---构造函数参数
 		Class<?>[] class1s = constructor.getParameterTypes();//返回由构造函数的参数组成的数组
 		//直接调用
 		Integer integer =(Integer) constructor.newInstance(12);//使用构造方法创造一个新的实例
-		
 		//field -- 成员变量反射类----这个参数必须通过 class类进行加载加载之后才能对其操作--因为要保证他有意义
 		Field field = class1.getField("heheh");
 		Field[] file=class1.getFields();//获得参数数组
@@ -122,7 +122,7 @@ public class i_反射机制 {
 		Parameter[] parameters=method.getParameters();//返回参数列表
 		parameters[0].getName();
 		parameters[0].getType();//返回类型的class数组
-		//参数类型没有注入方法
+		//参数类型没有注入 参数
 		method.invoke(new ThisisCeshe(), null);//类似 FIeld的get方法--调用指定的实例的一个此method指定的方法
 		int aa = class1.getModifiers();//返回参数类型表示方法
 		//Array 反射类
@@ -141,7 +141,11 @@ class myclassLoad extends ClassLoader{
 	//BootStrap ClassLoader：称为启动类加载器，是Java类加载层次中最顶层的类加载器，负责加载JDK中的核心类库，
 	//Extension ClassLoader：称为扩展类加载器，负责加载Java的扩展类库，默认加载JAVA_HOME/jre/lib/ext/目下的所有jar。
 	//App ClassLoader：称为系统类加载器，负责加载应用程序classpath目录下的所有jar和class文件。
-	//自定以加载器
+	//4）Custom ClassLoader
+	//属于应用程序根据自身需要自定义的ClassLoader，如tomcat、jboss都会根据j2ee规范自行实现ClassLoader
+	//加载过程中会先检查类是否被已加载，检查顺序是自底向上，从Custom ClassLoader到BootStrap ClassLoader逐层检查，
+	//只要某个classloader已加载就视为已加载此类，保证此类只所有ClassLoader加载一次。而加载的顺序是自顶向下
+	//，也就是由上层来逐层尝试加载此类。
 	@Override
 	protected Class<?> findClass(String arg0) throws ClassNotFoundException {
 		// TODO Auto-generated method stub

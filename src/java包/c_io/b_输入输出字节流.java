@@ -221,6 +221,8 @@ public class b_输入输出字节流 {
 	}
 }
 
+
+
 class MySocket {
 	public static void main(String[] args) throws IOException {
 		PipedOutputStream outputStream = new PipedOutputStream();

@@ -5,7 +5,7 @@ public class n_对象CLONE {
 		qianfuzhi();
 	}
 	static public void qianfuzhi(){
-		//clone 只是潜复制 --- 引用对象只是复制了内存地址并没有进行深层复制--
+		//clone 只是潜复制 --- 引用对象只是复制了内存地址并没有进行深层复制--指向相同的位置
 		Myceshi myceshi = new Myceshi("123123");
 		Myclone myclone = new Myclone();
 		//myclone.myceshi = myceshi;

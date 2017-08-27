@@ -40,6 +40,6 @@ class MyInvocationHandler implements InvocationHandler{
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 		System.out.println(method.getName()+"    "+proxy.getClass().getName());//传递的是调用的方法
 		Object object = method.invoke(this.object, args);
-		return null;
+		return object;//返回的是method执行完之后的对象
 	}
 }

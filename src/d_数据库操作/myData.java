@@ -6,7 +6,7 @@ import jdk.nashorn.internal.runtime.regexp.joni.ast.ConsAltNode;
 public class myData {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		Class.forName("com.mysql.jdbc.Driver");
-		Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/mysql", "root","14159265jkl");
+		Connection connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/mysql", "root","****");
 		PreparedStatement preparedStatement = connection.prepareStatement("select * from user");
 		ResultSet resultSet =preparedStatement.executeQuery();
 		while(resultSet.next()) {
@@ -33,7 +33,7 @@ class MySqlAll{
 		//?忽略掉ssl警告
 		url+="?useUnicode=true&characterEncoding=utf-8&useSSL=false";
 		//connect 是数据库连接参数里面储存了相关数据库连接的信息
-		Connection connection = DriverManager.getConnection(url, "root","14159265jkl");
+		Connection connection = DriverManager.getConnection(url, "root","****");
 		connection.getClientInfo();
 		connection.getClientInfo("root");//获得数据连接中的指定参数比如上面的
 		connection.setClientInfo(new Properties());

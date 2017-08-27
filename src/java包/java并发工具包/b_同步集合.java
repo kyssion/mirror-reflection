@@ -51,17 +51,18 @@ class Myclasses{
 		SynchronousQueue<String> synchronousQueue=
 				new SynchronousQueue<>();
 		synchronousQueue.take();//取出数据
-		// 不用获取的人直接进行获取，只要获取的人想要获那么添加的人就不用先加入队列然后在给出而是直接给他--注意这是新特性只用在使用transfer类的方法的时候才有用
+		
+		//变种转发队列不用获取的人直接进行获取，只要获取的人想要获那么添加的人就不用先加入队列然后在给出而是直接给他--注意这是新特性只用在使用transfer类的方法的时候才有用
 		LinkedTransferQueue<String> linkedTransferQueue=
 				new LinkedTransferQueue<>();
 		linkedTransferQueue.transfer("");//给他等待
 		linkedTransferQueue.tryTransfer("");//给他但是不进行等待 -成功返回true 否则false
-		//linkedTransferQueue.tryTransfer("", 100000,TimeUnit);
+		linkedTransferQueue.tryTransfer("", 100000,TimeUnit.HOURS);//等待指定的时间
 		
 		
 		
 		//首先所有的集合对象使用 这个方法都能编程线程同步的对象
-				Collections.synchronizedMap(new HashMap<>());
+		Collections.synchronizedMap(new HashMap<>());
 		//并发map
 		ConcurrentHashMap<String, String> concurrentHashMap=
 				 new ConcurrentHashMap<>();

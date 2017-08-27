@@ -14,12 +14,18 @@ import java.util.Spliterator;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Deque;
 import java.util.Iterator;
 //集合对象在当容量不够的时候将会发生扩张和扩容的方法
 public class a_所有接口 {
+	public void method() {
+		//Collections---java list 集合的工具类  提供各种list操作
+		//arrays  --- java 数组对象的工具类 提供各种数组操作
+	}
 	//--集合的基础接口  表示  一堆数据的统称此此接口是集合框架的接口--扩展了Iterable接口---所有实现了这个接口的都能使用foreach循环
 	Collection<String> collection= new Collection<String>() {
 		public boolean add(String e) {return false;}
@@ -331,6 +337,7 @@ public class a_所有接口 {
 			public String remove(Object arg0) {return null;}
 			public int size() {return 0;}
 		};
+		//sortMap
 		NavigableMap<String, String> navigableMap=new NavigableMap<String, String>() {
 			public Comparator<? super String> comparator() {return null;}
 			//返回第一个元素

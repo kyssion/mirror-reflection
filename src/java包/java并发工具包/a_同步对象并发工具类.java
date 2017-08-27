@@ -8,15 +8,15 @@ public class a_同步对象并发工具类 {
 		Semaphore semaphore = new Semaphore(1); // 声明同步工具锁
 												// 声明初始化的时候有几个信号量
 												// （还有一个可选的boolean类型参数表示是否使用顺序访问）
-		semaphore.acquire(); // 获得一个信号量默认是1 如果总量不足一的时候竟会停止
+		semaphore.acquire(); // 获得一个信号量默认是1 如果总量不足一的时候竟会停止 //只用当这个线程的标记达到了相关的标记量之后才会运行，否则一直阻塞
 		semaphore.release(); // 释放许可证表示释放许可证的数目默认是1
-		//semaphore.tryAcquire(0, timeout, unit);
+		semaphore.tryAcquire(0,123, TimeUnit.DAYS);//设置等待时间超过等待时间线程状态将致为interrupted
 	}
 	public void two() throws InterruptedException {
 		// 事件计数器共享类 -- 创建的时候声明一个时间计数器 （可以设置超时时间等效果）当计数器为零的时候await（）的线程可以进行运行
 		CountDownLatch countDownLatch = new CountDownLatch(10);
 		countDownLatch.countDown();// 让计数器加1
-		countDownLatch.await();// 进行等待...countDownLathch
+		countDownLatch.await();// 进行等待...countDownLathch--计数器减一
 		countDownLatch.getCount();//返回当前的计数器
 	}
 	public void three() throws InterruptedException, BrokenBarrierException {

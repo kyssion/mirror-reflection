@@ -102,9 +102,13 @@ public class MyservletHasConfig extends HttpServlet{
 		public Enumeration<String> getHeaderNames() {return null;}
 		public Enumeration<String> getHeaders(String arg0) {return null;}
 		public int getIntHeader(String arg0) {return 0;}
+		//获得相对路径
 		public String getRequestURI() {return null;}
+		//获得绝对路径
 		public StringBuffer getRequestURL() {return null;}
 		public String getRequestedSessionId() {return null;}
+		//获得请求的参数
+		public String getQureString() {return null;}
 		//???
 		public String getServletPath() {return null;}
 		public boolean isRequestedSessionIdFromCookie() {return false;}
@@ -191,7 +195,6 @@ public class MyservletHasConfig extends HttpServlet{
 		public Enumeration<String> getInitParameterNames() {return null;}
 		//在全局作用于中加入相关的属性
 		public boolean setInitParameter(String arg0, String arg1) {return false;}
-		
 		//添加过滤器
 		public Dynamic addFilter(String arg0, Class<? extends Filter> arg1) {return null;}
 		public Dynamic addFilter(String arg0, Filter arg1) {return null;}

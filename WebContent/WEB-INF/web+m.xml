@@ -20,6 +20,10 @@
   <servlet>
     <servlet-name>myservlet</servlet-name>
     <servlet-class>javaEE.a_servlet.使用配置文件.MyservletHasConfig</servlet-class>
+  	<init-param><!-- servlet中使用配置参数 -->
+  		<param-name>jeje</param-name>
+  		<param-value>jjj</param-value>
+  	</init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>myservlet</servlet-name>
