@@ -23,7 +23,6 @@
 						//alert(js)
 						document.getElementById("name").innerHTML = obj.name;
 						document.getElementById("id").innerHTML = obj.id;
-						
 					}
 					alert(myxmlhttprequest.readyState + " " + myxmlhttprequest.status);
 				}

@@ -17,7 +17,7 @@ import javax.websocket.server.ServerEndpointConfig;
 //注意websocket需要当需要使用本地回环的时候使用loaclhost而不要使用127.0.0.1----这个方法跑出电脑本地的环境导致相关的防火墙可能会挡住这个方法
 //启用websocket 用@ServerEndpoint或被注释为或@ClientEndpoint将被称为注释的端点的类。---后者不支持路径就是表示路径的请求
 //当没有一个词访问就会创建一个断点类就是websocket
-@ServerEndpoint(value = "/Mywebsocket")
+@ServerEndpoint(value = "/Mywebsocket",configurator=Myconfig.class)
 public class Mywebsocket {
 	//使用这中方法之后会将这个类编程一个接收端类  这个类用来管理每一个session(使用session)
 	@OnOpen//当客户端连接进来的时候出发这个方法
@@ -26,6 +26,8 @@ public class Mywebsocket {
 //		可选Session参数
 //		可选EndpointConfig参数
 //		零到n使用注释注释的String PathParam参数。
+		//可以获得传入的参数
+		endpointConfig.getUserProperties().get("xxx");
 	}
 	@OnClose//当客户端退出时触发这个方法
 	public void close(javax.websocket.Session session, javax.websocket.CloseReason closeReason){
@@ -54,8 +56,8 @@ public class Mywebsocket {
 //		如果方法是处理乒乓消息：---心跳处理消息
 //			PongMessage 处理乒乓消息
 		//获取信息发送----异步请求方法使用---返回一个消息处理方法使用这个方法将会导致返回一个处理流-- 处理流可以使用send和set方法进行相关的处理       
-		session.getAsyncRemote();
-		session.getBasicRemote();
+		//session.getAsyncRemote().sendxxx;
+		//session.getBasicRemote().sendxxx;//表示发送相关的请求
 	}
 	@OnError//当客户端出现错误的时候出发这个方法
 	public void inerror(javax.websocket.Session session, java.lang.Throwable e){
