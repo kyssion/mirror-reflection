@@ -6,7 +6,6 @@ import java.io.PipedOutputStream;
 import java.io.PipedReader;
 import java.io.PipedWriter;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -15,13 +14,13 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.concurrent.locks.AbstractQueuedSynchronizer.ConditionObject;
 
 
 
 public class e_多线程进阶 {
 	public void method() throws IOException {
 		// 关于输入流的问题----输入的数据极可能的一次性输入完 ---继承自 inputsteam outputsteam
+		//pai pu te  拷贝输入流
 		PipedInputStream pipedInputStream = new PipedInputStream();// 字符管道流
 		PipedOutputStream pipedOutputStream = new PipedOutputStream();
 		pipedInputStream.connect(pipedOutputStream);// 将两个通道进行关联（反过来写也对）
@@ -29,19 +28,27 @@ public class e_多线程进阶 {
 		pipedInputStream.read();// 当没有数据的时候将会进行等待操作
 		PipedWriter pipedWriter = new PipedWriter();
 		pipedOutputStream.write("asdfasdf".getBytes());// 同上
+		//ke nai ke te
 		pipedReader.connect(pipedWriter);// 将两个通道进行关联（反过来写也对）
 		// 管道流实现不同进程之间的通信可以不使用 类似 临时文件的东西
 		// ThreadLoacl--线程独立(解决数据的隔离性) ？？？？使用static 此变量的时候
 		// 每一个线程拥有一个独立的值--即使是继承的线程 也不会进行同步
+		
 		ThreadLocal<String> sLocal = new ThreadLocal<>();// 定义自定义变量
 		sLocal.set("ssss");// 设置值
 		sLocal.get();// 获得值
 		sLocal.remove();// 移除值
+		//ThreadLocal.set()来实现的，而是通过每个线程中的new 对象 的操作来创建的对象，每个线程创建一个，不是什么对象的拷贝或副本。
+		//通过ThreadLocal.set()将这个新创建的对象的引用保存到各线程的自己的一个map中，每个线程都有这样一个map，
+		//执行ThreadLocal.get()时，各线程从自己的map中取出放进去的对象，因此取出来的是各自自己线程中的对象，ThreadLocal实例是作为map的key来使用的。 
 		// 线程独立 -- 可以让子线程继承父线程的值 方法同上 如果父线程的值发生修改子线程的值将不会发生改变子线程也是如此
+		//in h e rui te bo
 		InheritableThreadLocal<String> inheritableThreadLocal = new InheritableThreadLocal<>();
 		// 重入同步锁 --- 类似 synchronized 但是功能更加强大
 		// --实现的原理让程序向下执行当制定的lock做出一些判断是否继续向下执行
 		// 解决不同对象不同线程互锁
+		
+		//瑞恩蠢他
 		ReentrantLock lock = new ReentrantLock();// 相当于 synchronized(xxx)
 													// 中声明的xxx
 		ReentrantLock lock2 = new ReentrantLock(true);// 生成公平锁
@@ -52,6 +59,7 @@ public class e_多线程进阶 {
 		//lock锁并不支持锁重入但是 同一个线程多次获得这个锁并不会导致阻塞
 		
 		// 下边这个方法和wait notify相同 必须在同步代码快中才能使用
+		//砍滴神
 		Condition condition = lock.newCondition();// 从 lock中获得condition 从而实现
 													// wait notify方法 见下面
 		try {
@@ -61,6 +69,7 @@ public class e_多线程进阶 {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		//s ying g nal
 		condition.signal();// 类似于于 notify-----解锁一个以condition进行上锁的线程
 		condition.signalAll();// 类似于于notifyall----解锁所有以condition上锁的线程
 		lock.getHoldCount();// 使用了 lock的总数
@@ -348,7 +357,6 @@ class one {
 		three.start();
 	}
 }
-
 class Mythreadone3 extends Thread {
 	ReentrantLock reentrantLock = null;
 	ArrayList<Condition> condition = null;
@@ -394,6 +402,12 @@ class MythreadTwo3 extends Thread {
 	@Override
 	public void run() {
 		this.reentrantLock.lock();
+		try {
+			this.condition.get(1).await();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		for (int a = 0; a < 10000; a++) {
 			try {
 				System.out.println(a + " " + Thread.currentThread().getName());
@@ -424,6 +438,12 @@ class MythreadThree extends Thread {
 
 	public void run() {
 		reentrantLock.lock();
+		try {
+			this.condition.get(2).await();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		for (int a = 0; a < 10000; a++) {
 			System.out.println(a + "   " + Thread.currentThread().getName());
 			try {
@@ -438,6 +458,7 @@ class MythreadThree extends Thread {
 		this.reentrantLock.unlock();
 	}
 }
+
 //使用 pip的时候相关的数据共享流数据运输的问题
 class MySocket {
 	public static void main(String[] args) throws IOException {

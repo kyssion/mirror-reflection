@@ -22,7 +22,6 @@ public class a_基础语法 {
 		int d = 0123;// 使用 8进制
 		d = 0x1234;// 使用16进制
 		d = 0b1000_0000;// j7新特心直接进行 二进制编写
-
 		// java 运算符
 		// 算数运算符+ - * / % ++ --
 		// 赋值运算符=
@@ -31,11 +30,8 @@ public class a_基础语法 {
 		// 条件运算符 ? : 扩展赋值运算符 += -= *= /=
 		// 流程控制语句
 		if (true) {
-
 		} else if (true) {
-
 		} else {
-
 		}
 		while (true) {
 			break;
@@ -54,12 +50,10 @@ public class a_基础语法 {
 		default:
 			break;
 		}
-
 		while (true) {
 			break;
 		}
 		// 基础方法 scanner
-
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);// 传入一个输入流
 		// 引申可以从字符串（Readable）、输入流、文件等等来直接构建Scanner对象，有了Scanner了，
@@ -71,29 +65,24 @@ public class a_基础语法 {
         scanner.hasNextLine(); //如果在此扫描器的输入中存在另一行，则返回 true。
         scanner.next(); //查找并返回来自此扫描器的下一个完整标记。
         scanner.nextLine(); //此扫描器执行当前行，并返回跳过的输入信息。
-        
         //java 比较运算符 --  只能用来比较有继承关系的类
         Integer bb=12;
         //这个是对象比较符
         if (bb instanceof Integer) {
 		}
         //使用类名称比较符
-        Integer.class.isInstance(bb);
-        
+        Integer.class.isInstance(bb);   
 	}
-
 	// 枚举类型 简单枚举类型
 	public enum Color {
 		RED, GREEN, BLANK, YELLOW
 	}
-
 	// 可以在内部声明方法
 	public enum Light {
 		// 利用构造函数传参---枚举类型中每一个参数就相当于一个枚举类型
 		RED(1), GREEN(3), YELLOW(2);
 		// 定义私有变量
 		private int nCode;
-
 		// 构造函数，枚举类型只能为私有
 		private Light(int _nCode) {
 			this.nCode = _nCode;

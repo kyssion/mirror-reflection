@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!-- 
-
 					jsp指令标识
 		一.page指令--为整个页面的定义的属性
 				1.language	-定义jsp页面使用的语言目前只能使用java
@@ -18,7 +17,8 @@
 		三.taglib  <%@ taglib prefix="x" uri="" %> 加入第三方标签文件的位置 prefix表示前缀 uri表示标签文件存放的位置
 		四.<%! %>-使用这个框住的表示全局变量 没有!-表示嵌入的代码脚本
  -->
-<!-- jsp 七大动作指令   默认内置不用使用taglib 编译指令 -->\
+
+<!-- jsp 七大动作指令   默认内置不用使用taglib 编译指令 -->
 	<!-- 转发到hellow.jsp处 -->
 	<jsp:forward page="hellow.jsp">
 		<jsp:param value="123" name="sss" /><!-- 为url参数加入数值 -->

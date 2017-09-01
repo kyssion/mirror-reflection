@@ -1,10 +1,6 @@
 package a_java基础知识点;
 
 import java.util.concurrent.atomic.AtomicInteger;
-
-import com.sun.org.apache.bcel.internal.generic.NEW;
-import com.sun.org.apache.xpath.internal.operations.String;
-
 //java 中线程是嵌套的
 //线程状态有  创建 就绪状态 运行状态 阻塞状态 终止状态
 public class e_多线程 {// 一个类的同一个方法被不同的类锁调用
@@ -22,6 +18,7 @@ public class e_多线程 {// 一个类的同一个方法被不同的类锁调用
 							// join线程的方法 当join中线程的方法实现完成后将会自动执行原来主线程中的方法
 							// 内部实现wait方法会释放锁
 		thread.join();// 等待要加入的线程执行完再执行 ---join 内部实现wait方法 会释放锁 作用等待线程对象销毁(sleep 方法将会到之相关的县城被占用)
+						//当前的线程等待thread线程
 		thread.isAlive();// 判断线程是否终止 true 没有终止
 		thread.run();// 线程的入口点
 		thread.start();// 调用线程润方法启动 默认调用thread 中的run 方法
@@ -30,7 +27,6 @@ public class e_多线程 {// 一个类的同一个方法被不同的类锁调用
 		thread.setPriority(8);// 设置线程的抢占优先级
 		thread.getState();//获得指定线程的状态  new-创建 runnable-运行 terminated-销毁 TiMED_WAITING-（sleep等待状态) blocked-（等待锁状态） waiting-（使用wait之后的状态）
 		// 使用同一个类的不同线程间的通信---同一类中的不同方法在同一个类中被调用
-		
 		// !!!!!!!!!wait 方法 必须和 synchxxx关键字一起使用否则会抛出
 		// 异常java.lang.IllegalMonitorStateException
 		// 精确的解释 休眠正在调用的当前线程 唤醒一个调用过这个的当前线程
@@ -42,11 +38,12 @@ public class e_多线程 {// 一个类的同一个方法被不同的类锁调用
 		// 是的是当前调用对象的所有线程中 唤醒其中的一个
 		this.notifyAll();// --唤醒当前的类被wait的所有线程---注意是占用的类
 		thread.yield();// ---放弃当前资源让其他任务去占用cpu时间并不是结束当前的运行
-		thread.interrupt();// 终止sleep--改变线程状态 wait的对象会抛出 异常
+		thread.interrupt();// 终止sleep--改变线程状态 wait的对象会抛出 异常----改变Thread.isTnterrupted();的状态
 		Thread.interrupted();//静态方法 会制标识位为false 测试线程是否停止 --使用后将会改变状态 ---这个方法只有一个使用的方法就是使用sleep+interupted抛出异常
 		thread.isInterrupted();// 测试线程是否终止使用后 不会改变标识位 讲不会改变状态-判断是否使用了interrupted
 		//interrupted 是作用于当前线程，isInterrupted 是作用于调用该方法的线程对象所对应的线程。（线程对象对应的线程不一定是当前运行的线程。例如我们可以在A线程中去调用B线程对象的isInterrupted方法。）
 		//当一个线程处于中断状态时，如果再由wait、sleep以及jion三个方法引起的阻塞，那么JVM会将线程的中断标志重新设置为false，并抛出一个InterruptedException异常，然后开发人员可以中断状态位“的本质作用-----就是程序员根据try-catch功能块捕捉jvm抛出的InterruptedException异常来做各种处理，比如如何退出线程。
+		//地门
 		thread.setDaemon(true);// 将会变成一个守护线程 守护线程将会在外部的线程结束时候自动的结束
 		// 线程结束的方法 推荐使用 return 结束这个函数的run方法就可以了 使用stop可能会发生不可预料的结果
 		// 过时方法 不推荐使用了---但是这个个方法只是使用暂停但是没有释放暂停的方法
@@ -58,8 +55,6 @@ public class e_多线程 {// 一个类的同一个方法被不同的类锁调用
 		threadGroup.activeGroupCount();//返回线组中的活动线程组的数量
 		thread.activeCount();//	返回线程中相同线程组中的线程数量;
 		threadGroup.activeCount();//返回这个线程组中的相同线程的数量
-		
-		
 		//Thread 表示使用的当前的线程
 		//如果线程是通过实现Runnable接口来实现的，则不是Thread类，不能直接使用Thread.xxxxx，
 		Thread.currentThread();// 获得当前正在使用的cpu线程
@@ -68,9 +63,7 @@ public class e_多线程 {// 一个类的同一个方法被不同的类锁调用
 		Thread.holdsLock(new String());//如果當前線程在指定的對象上保持監視器鎖此方法返回true。
 		Thread.yield();
 		Thread.interrupted();
-		
 	}
-
 	@SuppressWarnings("unused")
 	public void method2() {
 		// 主线程的线程的默认优先级是5 main 是主线程-当前正所处在的线程组的名称
@@ -82,15 +75,12 @@ class mythread2 extends Thread {
 	public mythread2() {
 		super();
 	}
-
 	// 重写了run 方法就会进行自动启动
 	@Override
 	public void run() {
 		super.run();
 	}
-
 }
-
 // 当 多线程的时候如果出现了异常 锁会自动的释放
 // 同步锁只只是对加了同步的部分进行的同步
 class Ceshi5 {
@@ -100,7 +90,7 @@ class Ceshi5 {
 	// synchronized的时候将会 重写的方法将不会有继承性
 	// 这个方法 会导致线程中所有的 同步方法 和同步代码块都不进行相互冲突
 	volatile int a;// 声明变量的值是从共有堆()中 取得的数据 而不是 从私用堆中 jvm在server模式下  为实现效率没有同步共有私有堆的数据--死记着
-
+	//thing kui nai zi di
 	synchronized public void call(String s) {
 		// 这个方法加上的是对象同步锁(就是使用不同的线程调用相同的对象) 对于不同的对象 他们之间的synchronized 是没有区别的
 		System.out.print("{" + s);
@@ -185,6 +175,7 @@ class Mythread extends Thread {
 	// volatile将会强制使用最新的变量--相当于给变量加上互斥锁
 	// 这个解决了重复赋值的问题
 	//原子性加可见性
+	//我 了 太 e
 	volatile AtomicInteger aaAtomicInteger = new AtomicInteger(10);// 声明原子性的变量可以实现原子性
 
 	synchronized public static void add() { // static 加上 synchronized 实现 class

@@ -46,7 +46,6 @@ public class MyservletHasConfig extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.getRequestDispatcher("MyJsp.jsp").forward(req, resp);
-		
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -126,6 +125,7 @@ public class MyservletHasConfig extends HttpServlet{
 		//设置http报头方法
 		public void flushBuffer() throws IOException {}
 		public int getBufferSize() {return 0;}
+		//get ke rui ke te
 		public String getCharacterEncoding() {return null;}
 		public String getContentType() {return null;}
 		public Locale getLocale() {return null;}

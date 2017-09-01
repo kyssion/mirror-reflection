@@ -23,15 +23,21 @@ class ThisIsMyProxy implements Myinterface{
 	@Override
 	public void methodsay() {
 		// TODO Auto-generated method stub
+		He eHe = new He();
+		MyInvocationHandler myInvocationHandler = new MyInvocationHandler();
+		JKL jkl= (JKL) myInvocationHandler.bind(eHe);
+		jkl.say();
 		System.out.println("heheheeh");
 	}
 }
+// in v kei shen
 class MyInvocationHandler implements InvocationHandler{
 	private Object object;
 	public MyInvocationHandler() {
 		// TODO Auto-generated constructor stub
 		super();
 	}
+	//破 罗 可 see
 	public Object bind(Object object){
 		this.object = object;
 		return Proxy.newProxyInstance(object.getClass().getClassLoader(), object.getClass().getInterfaces(), this);
@@ -41,5 +47,13 @@ class MyInvocationHandler implements InvocationHandler{
 		System.out.println(method.getName()+"    "+proxy.getClass().getName());//传递的是调用的方法
 		Object object = method.invoke(this.object, args);
 		return object;//返回的是method执行完之后的对象
+	}
+}
+interface JKL{
+	public void say();
+}
+class He implements JKL{
+	public void say() {
+		System.out.println("sdf");
 	}
 }

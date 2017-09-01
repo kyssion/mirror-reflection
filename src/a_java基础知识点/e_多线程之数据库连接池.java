@@ -5,11 +5,6 @@ import java.util.LinkedList;
 public class e_多线程之数据库连接池 {
 
 }
-
-
-
-
-
 //手动实现一个简单的连接池
 class myPoolThreadceshi {
 	public static void main(String[] args) throws Exception {
@@ -19,7 +14,6 @@ class myPoolThreadceshi {
 		}
 	}
 }
-
 class MythreadPool {
 	LinkedList<Item> linkedList = new LinkedList<>();
 	private int count = 0;
@@ -31,7 +25,6 @@ class MythreadPool {
 			linkedList.add(new Item(a));
 		}
 	}
-
 	public void add(Item item) {
 		if (item != null) {
 			synchronized (linkedList) {
@@ -68,7 +61,6 @@ class MythreadPool {
 		}
 	}
 }
-
 class Item {
 	public int number = 0;
 
@@ -81,7 +73,6 @@ class Item {
 		return this.number;
 	}
 }
-
 class MythreadforPool extends Thread {
 	MythreadPool pool = null;
 

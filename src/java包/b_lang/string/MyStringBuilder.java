@@ -1,5 +1,5 @@
 package java包.b_lang.string;
-
+import java.math.BigInteger;
 public class MyStringBuilder {
 		// 一个可变的字符序列。此类提供一个与 StringBuffer 兼容的 API，但不保证同步
 		// 的字符串缓冲区，但不能修改。虽然在任意时间点上它都包含某种特定的字符序列，

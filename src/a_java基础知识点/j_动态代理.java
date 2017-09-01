@@ -26,8 +26,7 @@ public class j_动态代理 {
 		Proxy.newProxyInstance(new ClassLoader() {//新建一个代理接口
 		}, null	, Proxy.getInvocationHandler(new IncompatibleClassChangeError()));
 		// 返回一个指定接口的代理类实例，该接口可以将方法调用指派到指定的调用处理程序。
-		//相当于Proxy.getProxyClass(loader, interfaces).getConstructor(new Class[] { InvocationHandler.class }).newInstance(new Object[] { handler });
-                  
+		//相当于Proxy.getProxyClass(loader, interfaces).getConstructor(new Class[] { InvocationHandler.class }).newInstance(new Object[] { handler });         
 	}
 	public void  methodInvocationHandler(){
 		 InvocationHandler in = new   InvocationHandler(){

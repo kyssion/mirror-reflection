@@ -10,7 +10,6 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <!-- 注意：监听器>过滤器>serlvet，配置的时候要注意先后顺序 -->
-  
   <!-- 设置application作用域的参数 -->
   <context-param>
     <param-name>hehe</param-name>
@@ -20,7 +19,8 @@
   <servlet>
     <servlet-name>myservlet</servlet-name>
     <servlet-class>javaEE.a_servlet.使用配置文件.MyservletHasConfig</servlet-class>
-  	<init-param><!-- servlet中使用配置参数 -->
+  	<init-param>
+  	<!-- servlet中使用配置参数 -->
   		<param-name>jeje</param-name>
   		<param-value>jjj</param-value>
   	</init-param>

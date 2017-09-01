@@ -142,7 +142,6 @@ public class a_所有接口 {
 	};
 	//NavigableSet接口----返回一?????暂时不考虑
 	NavigableSet<String> navigableSet = new NavigableSet<String>() {
-		//
 		public Comparator<? super String> comparator() {return null;}
 		public String first() {return null;}
 		public String last() {return null;}
@@ -182,6 +181,7 @@ public class a_所有接口 {
 		
 	};
 	//queue--队列
+	//Q
 	Queue<String> queue = new Queue<String>() {
 		//向队列中添加对象
 		public boolean add(String e) {return false;}
@@ -217,7 +217,8 @@ public class a_所有接口 {
 		//返回一个数组  如果集合中的数量超出 a的长度 就分配一个新的数组 否则将数组 存入 a中并且 返回null
 		public <T> T[] toArray(T[] a) {return null;}	
 	};
-	//Deque 接口   双向队列
+	//Deque 接口   双向队列  
+	//d e k
 	Deque<String> deque= new Deque<String>() {
 		public boolean add(String e) {return false;}
 		public void addFirst(String e) {}
