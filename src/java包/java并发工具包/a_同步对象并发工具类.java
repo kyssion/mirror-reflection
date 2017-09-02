@@ -5,10 +5,13 @@ import java.util.concurrent.*;
 public class a_同步对象并发工具类 {
 	public void one() throws InterruptedException {
 		// 信号量同步工具 和ReentrantLock类似
+		//sin me for
 		Semaphore semaphore = new Semaphore(1); // 声明同步工具锁
 												// 声明初始化的时候有几个信号量
 												// （还有一个可选的boolean类型参数表示是否使用顺序访问）
+		//e 快 e
 		semaphore.acquire(); // 获得一个信号量默认是1 如果总量不足一的时候竟会停止 //只用当这个线程的标记达到了相关的标记量之后才会运行，否则一直阻塞
+		//rui li s
 		semaphore.release(); // 释放许可证表示释放许可证的数目默认是1
 		semaphore.tryAcquire(0,123, TimeUnit.DAYS);//设置等待时间超过等待时间线程状态将致为interrupted
 	}
@@ -21,6 +24,7 @@ public class a_同步对象并发工具类 {
 	}
 	public void three() throws InterruptedException, BrokenBarrierException {
 		// 这个方法是先按照 await的线程的数量进行操作的方法
+		//sai ke le ke bai rui e
 		CyclicBarrier cyclicBarrier = new CyclicBarrier(3, new Runnable() {
 			@Override
 			public void run() {

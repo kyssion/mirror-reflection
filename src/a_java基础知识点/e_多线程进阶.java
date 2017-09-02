@@ -20,7 +20,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public class e_多线程进阶 {
 	public void method() throws IOException {
 		// 关于输入流的问题----输入的数据极可能的一次性输入完 ---继承自 inputsteam outputsteam
-		//pai pu te  拷贝输入流
+		//pai p te  拷贝输入流
 		PipedInputStream pipedInputStream = new PipedInputStream();// 字符管道流
 		PipedOutputStream pipedOutputStream = new PipedOutputStream();
 		pipedInputStream.connect(pipedOutputStream);// 将两个通道进行关联（反过来写也对）

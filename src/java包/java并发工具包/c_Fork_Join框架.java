@@ -10,7 +10,6 @@ import java.util.concurrent.RecursiveTask;
 
 public class c_Fork_Join框架 {
 	public static void main(String[] args) {
-		
 		ForkJoinPool forkJoinPool = new ForkJoinPool();
 		MyForkOne myForkOne = new MyForkOne(0, 100);
 		Future<Integer> future= forkJoinPool.submit(myForkOne);
@@ -35,7 +34,8 @@ public class c_Fork_Join框架 {
 	}
 }
 //fork/join==实现将队列中的数据进行分个从而操作相关的数据进行并发编程
-//ForkJoinTark 有两个抽象类 RecursiveTask（有返回值的） RecursiveAction无返回值的
+//rui ka si zi 
+//ForkJoinTark 有两个抽象类 (递归)RecursiveTask（有返回值的） RecursiveAction无返回值的
 class MyForkOne extends RecursiveTask<Integer>{//一般使用forkjoinTask的实现类
 	private static final long serialVersionUID = 1L;
 	private int start;

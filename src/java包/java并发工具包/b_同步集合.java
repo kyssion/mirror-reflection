@@ -31,12 +31,17 @@ class Myclasses{
 		//阻塞数组----是数组而不是list -- 获得更好的性能--有界
 		ArrayBlockingQueue<String> arrayBlockingQueue =
 				new ArrayBlockingQueue<>(100,true);//true 是否使用公平锁
+		//只有使用这两个方法才能实现阻塞
+		arrayBlockingQueue.take();
+		arrayBlockingQueue.put("");
 		//阻塞链表-----同上只是数组的链表形式---有界
 		LinkedBlockingQueue<String> linkedBlockingQueue=
 				new LinkedBlockingQueue<>();
+		//de ke
 		LinkedBlockingDeque<String> linkedBlockingDeque =
 				new LinkedBlockingDeque<>();
 		//优先级排序队列----阻塞模式 --- 无界
+		//pai o rui ti
 		PriorityBlockingQueue<String> priorityBlockingQueue=
 				new PriorityBlockingQueue<>(100, new Comparator<String>() {
 					@Override
@@ -51,16 +56,12 @@ class Myclasses{
 		SynchronousQueue<String> synchronousQueue=
 				new SynchronousQueue<>();
 		synchronousQueue.take();//取出数据
-		
 		//变种转发队列不用获取的人直接进行获取，只要获取的人想要获那么添加的人就不用先加入队列然后在给出而是直接给他--注意这是新特性只用在使用transfer类的方法的时候才有用
 		LinkedTransferQueue<String> linkedTransferQueue=
 				new LinkedTransferQueue<>();
 		linkedTransferQueue.transfer("");//给他等待
 		linkedTransferQueue.tryTransfer("");//给他但是不进行等待 -成功返回true 否则false
 		linkedTransferQueue.tryTransfer("", 100000,TimeUnit.HOURS);//等待指定的时间
-		
-		
-		
 		//首先所有的集合对象使用 这个方法都能编程线程同步的对象
 		Collections.synchronizedMap(new HashMap<>());
 		//并发map

@@ -74,6 +74,7 @@ public class Mystring {
 	}
 	//StringTokenizer 的用法
 	public  void method2(){
+		//to ke nai ze
 		StringTokenizer stringTokenizer = new StringTokenizer("123123", ",;");//声明形成一个可以进行分割和动态处理字符串的工具类可以指定多个字符为分割符号
 		int count=stringTokenizer.countTokens();//返回分割了几个字符串
 		boolean b = stringTokenizer.hasMoreTokens();//返回是否还有字符串没有被分割

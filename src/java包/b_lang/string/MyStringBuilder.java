@@ -15,6 +15,5 @@ public class MyStringBuilder {
 			stringBuffer.getChars(0, 10, ch, 2);					// 将stringbuffer 0-10 拷进从ch的=第2位开始的地方
 			stringBuffer = stringBuffer.replace(0, 12, "23");		// 使用给定 String 中的字符替换此序列的子字符串中的字符。
 			stringBuffer = stringBuffer.reverse(); 					// 将此字符序列用其反转形式取代。
-			
 		}
 }

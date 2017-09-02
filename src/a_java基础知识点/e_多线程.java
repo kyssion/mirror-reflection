@@ -89,6 +89,7 @@ class Ceshi5 {
 	// synchronized 只能修饰 方法 而且方法不具有继承性 也就是说如果子类重写了这个方法 并且没有在动态的加上
 	// synchronized的时候将会 重写的方法将不会有继承性
 	// 这个方法 会导致线程中所有的 同步方法 和同步代码块都不进行相互冲突
+	//wo le ti e
 	volatile int a;// 声明变量的值是从共有堆()中 取得的数据 而不是 从私用堆中 jvm在server模式下  为实现效率没有同步共有私有堆的数据--死记着
 	//thing kui nai zi di
 	synchronized public void call(String s) {
