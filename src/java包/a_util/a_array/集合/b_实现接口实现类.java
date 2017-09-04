@@ -44,7 +44,6 @@ public class b_实现接口实现类 {
 		arrayList.toArray();//----注意toarray类型的方法
 		//Vector 类  同步arraylist
 		Vector<String> vector = new Vector<>();
-		
  	}
 	//实现 set  接口  散列机制
 	public void method1(){

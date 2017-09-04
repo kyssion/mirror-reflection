@@ -58,6 +58,7 @@ public class e_多线程 {// 一个类的同一个方法被不同的类锁调用
 		//Thread 表示使用的当前的线程
 		//如果线程是通过实现Runnable接口来实现的，则不是Thread类，不能直接使用Thread.xxxxx，
 		Thread.currentThread();// 获得当前正在使用的cpu线程
+		
 		Thread.activeCount();
 		Thread.interrupted();
 		Thread.holdsLock(new String());//如果當前線程在指定的對象上保持監視器鎖此方法返回true。

@@ -11,7 +11,7 @@ public class d_原子操作类型 {
 		atomicInteger.get();
 		atomicInteger.set(123);
 		atomicInteger.addAndGet(123);//输入新的值和和旧值相加并返回和
-		atomicInteger.compareAndSet(0, 2);//
+		atomicInteger.compareAndSet(0, 2);//ssssssa
 		atomicInteger.getAndIncrement();//原子自增加
 		atomicInteger.lazySet(123);//延迟赋值
 		atomicInteger.getAndSet(333);//设置新值返回旧值

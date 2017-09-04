@@ -121,7 +121,6 @@ class Time {
 class Myreented implements Lock {
 	class Sync extends AbstractQueuedSynchronizer {
 		private static final long serialVersionUID = 1L;
-
 		@Override // 独占时获取同步状态
 		protected boolean tryAcquire(int arg) {
 			if (compareAndSetState(0, 1)) {// 使用cas设置当前的状态，此方法可以保证原子性
@@ -132,7 +131,6 @@ class Myreented implements Lock {
 			}
 			return false;
 		}
-
 		@Override // 独占式释放同步状态，等待获取同步状态的将有机会获取同步状态
 		protected boolean tryRelease(int arg) {
 			if (getState() == 0) {// 获得当前的同步状态

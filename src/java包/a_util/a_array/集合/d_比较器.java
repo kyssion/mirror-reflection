@@ -15,8 +15,6 @@ public class d_比较器 {
 			public boolean equals(Object obj) {return super.equals(obj);}
 			//放回此比较器的颠倒形式
 			public Comparator<String> reversed() {return Comparator.super.reversed();}
-			
-			
 			//jdk新增后续比较器 -- 再议
 			public Comparator<String> thenComparing(Comparator<? super String> other) {
 				return Comparator.super.thenComparing(other);}

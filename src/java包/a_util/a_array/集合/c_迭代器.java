@@ -8,6 +8,7 @@ import java.util.function.Consumer;
 
 public class c_迭代器 {
 	public void method(){
+		// yi t rui te
 		Iterator<String> iterator = new Iterator<String>() {
 			//对于集合中每个未处理的元素执行action指定的动作
 			public void forEachRemaining(Consumer<? super String> action) {Iterator.super.forEachRemaining(action);}

@@ -11,12 +11,10 @@ public class Mylistenter implements HttpSessionListener,HttpSessionAttributeList
 	@Override
 	public void sessionCreated(HttpSessionEvent arg0) {
 		// TODO Auto-generated method stub
-		
 	}
 	@Override
 	public void sessionDestroyed(HttpSessionEvent arg0) {
 		// TODO Auto-generated method stub
-		
 	}
 	//在session作用域中添加和删除 修改
 	@Override
@@ -33,6 +31,5 @@ public class Mylistenter implements HttpSessionListener,HttpSessionAttributeList
 	@Override
 	public void attributeReplaced(HttpSessionBindingEvent arg0) {
 		// TODO Auto-generated method stub
-		
 	}
 }

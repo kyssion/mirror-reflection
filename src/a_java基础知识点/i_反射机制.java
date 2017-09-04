@@ -60,9 +60,11 @@ public class i_反射机制 {
 		//--成员变量
 		Field field =class1.getDeclaredField("xixi");//返回变量名称为 field 的直接成员变量名称
 		Field field2= class1.getField("xxixi");//返回变量名称包括父元素的成员变量
+		//f ye e d
 		Field[] fields=class1.getDeclaredFields();//返回所有直接的成员变量
 		Field[] fields2 = class1.getFields();//返回所有的成员变量 包括父类进行继承的变量
 		//--成员方法
+		//di k le de
 		Method method = class1.getDeclaredMethod("xx", Integer.class);//返回名称为xx 参数为后面的变长数组的直接成员方法
 		Method method2 = class1.getMethod("x", Integer.class);//上面方法 处理继承版
 		//----判断方法
@@ -86,15 +88,17 @@ public class i_反射机制 {
 		accessibleObject.isAnnotationPresent(hehehe.class);//判断这个类是否实现了hehehe这个接口
 		accessibleObject.getAnnotation(hehehe.class);
 		accessibleObject.getAnnotations();
-		accessibleObject.setAccessible(true);//!!!---设置当前东西的访问性--- 设置为true的时候将可以实现对私有变量的
+		accessibleObject.setAccessible(true);//!!!---设置当前东西的访问性--- 设置为true的时候将可以实现对私有变量的  该便似有变量和成员的访问性
 		//accessibleObject.setAccessible(new String(){"1"}, flag);
 		//construction 注解类型---  注解表示构造方法生成的类型
 		Constructor<?> constructor = (Constructor<Integer>) new Integer(12).getClass().getConstructor(Integer.class);
 		constructor=class1.getConstructor(Integer.class,String.class);
+		
 		//---有关注解的方法---继承自父类
 			//特殊的注解方法
 		Annotation[][] annotation = constructor.getParameterAnnotations();//返回二维数组 第一维表示构造函数 第二位表示 注释类型--因为一个类可能有多个构造函数
 		Annotation[] annotations3=constructor.getAnnotations();
+		
 		constructor.getDeclaringClass();//表明生成这个对象所对应的类
 		constructor.getName();//	返回构造函数的名称
 		//---构造函数参数
@@ -111,7 +115,7 @@ public class i_反射机制 {
 		int a=field.getModifiers();//返回参数类型--public或者其他
 		//method --方法
 		Method method = class1.getMethod("methodForClassLoad", null);//获得class类中的method方法
-		//---反射相关的和上面的相同
+		//---反射相关的和上面的相同--不返回父类私有方法
 		Class<?> class2 = method.getDeclaringClass();//返回这个方法类的对象
 		String name = method.getName();//返回方法名称
 		Annotation[][] annotations = method.getParameterAnnotations();//返回一个注解的二维数组 --同上面
