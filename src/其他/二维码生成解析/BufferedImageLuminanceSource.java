@@ -9,7 +9,7 @@
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * WITHOUT WARRANTIES OR CONDITIONS OFY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
@@ -70,7 +70,7 @@ public final class BufferedImageLuminanceSource extends LuminanceSource {
             pixel = 0xFFFFFFFF; // = white
           }
 
-          // .299R + 0.587G + 0.114B (YUV/YIQ for PAL and NTSC), 
+          // .299R + 0.587G + 0.114B (YUV/YIQ for PAL and NTSC),
           // (306*R) >> 10 is approximately equal to R*0.299, and so on.
           // 0x200 >> 10 is 0.5, it implements rounding.
           buffer[x] =

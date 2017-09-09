@@ -18,6 +18,7 @@ package 其他.二维码生成解析;
 
 import java.awt.image.BufferedImage;
 
+
 /**
  * Encapsulates custom configuration used in methods of {@link MatrixToImageWriter}.
  */
@@ -25,7 +26,7 @@ public final class MatrixToImageConfig {
 
   public static final int BLACK = 0xFF000000;
   public static final int WHITE = 0xFFFFFFFF;
-  
+
   private final int onColor;
   private final int offColor;
 
