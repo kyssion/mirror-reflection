@@ -157,4 +157,8 @@ public class b_实现接口实现类 {
 		public synchronized int search(Object o) {return super.search(o);}
 		
 	}
+	//tree
+	public void method22() {
+		
+	}
 }

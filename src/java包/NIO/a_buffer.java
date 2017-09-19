@@ -1,9 +1,12 @@
 package java包.NIO;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.channels.Channel;
+import java.nio.channels.FileChannel;
 
 public class a_buffer {
-	public void bytebuffer() {
+	public void bytebuffer() throws IOException {
 		// buffer 是缓冲区 相关的实现类有byte 插入 都变了( float int long mapped short)+buffer
 		ByteBuffer buffer = ByteBuffer.allocate(1024);// 使用这个声明一个缓冲区
 														// 数字表示缓冲区的大小(字节)
@@ -23,8 +26,11 @@ public class a_buffer {
 		buffer.position();// 返回当前位置
 		buffer.position(100);// 设置当前位置是100
 		buffer.remaining();// 返回还可以存入数据的值
+		
 		buffer.rewind();// 让positon变成0 意味着可以进行重读操作
+		
 		buffer.clear();// 清空缓冲区 --- 不保留未读的数据
+		
 		buffer.compact();// 清空缓冲区--- 保留未读的数据
 		buffer.hasRemaining();//缓冲区是否还有空间在position和limit之间
 		buffer.equals(buffer);// 当满足下列条件时，表示两个Buffer相等：
@@ -47,5 +53,13 @@ public class a_buffer {
 		buffer.asCharBuffer();// 讲buffer转化成相关的流
 		buffer.putChar('a');// ---相同类型的虼蚤方法
 		buffer.getInt();//
+		
+		
+		//写入buffer
+		Channel channel ;
+		FileChannel fi = null;
+		//channel 读写操作
+		fi.read(buffer);
+		fi.write(buffer);
 	}
 }

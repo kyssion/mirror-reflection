@@ -17,9 +17,7 @@ public class p_java时间函数 {
 		date.before(new Date());
 		date.after(new Date());
 		date.getTime();//返回毫秒数
-		
 		//date一般和simpleDateFormat连用
-		
 		Calendar calendar =Calendar.getInstance();//获取当前的系统时间
 		calendar.add(Calendar.YEAR, 1000);//设置calendar的时间变量
 		calendar.getTimeInMillis();//获得毫秒
@@ -28,8 +26,6 @@ public class p_java时间函数 {
 		calendar.compareTo(calendar);//返回相差毫秒数
 		calendar.before(calendar);
 		calendar.after(calendar);
-		
-		
 	}
 }
 class A extends Format{

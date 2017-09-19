@@ -5,6 +5,9 @@ import java.util.Scanner;
 public class a_基础语法 {
 	@SuppressWarnings("unused")
 	public static void main(String[] arg) {
+		long a=123L;
+		int aaa=(int) (a+1);
+		//上转型转化成更加高级的形式需要进行强制转化
 		// 1. 变量必须是字母,下划线或者$符开头不能是 java 关键字
 		int $a = 123;
 		int _b = 123;
@@ -35,6 +38,11 @@ public class a_基础语法 {
 		}
 		while (true) {
 			break;
+		}
+		try {
+			
+		} finally {
+			// TODO: handle finally clause
 		}
 		// 先运行在判断---这个方法相当于给代码块进行命名而已
 		hhe: do {
@@ -71,7 +79,12 @@ public class a_基础语法 {
         if (bb instanceof Integer) {
 		}
         //使用类名称比较符
-        Integer.class.isInstance(bb);   
+        Integer.class.isInstance(bb);  
+        
+        
+        bb.equals("sdf");//当没有超嗯些quals 的时候  比较的是内存地址  和==类似 
+        bb.hashCode();//其实是内存映射的hash表的健（地址值）
+        //引申hashset和hashcode的相等规则---相比较hashcode 再比较 equals
 	}
 	// 枚举类型 简单枚举类型
 	public enum Color {
@@ -92,6 +105,7 @@ public class a_基础语法 {
 			return String.valueOf(this.nCode);
 		}
 	}
+	final int a=0;
 	/*
 	 * Java包注释
 	 * 

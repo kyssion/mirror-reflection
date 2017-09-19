@@ -31,9 +31,11 @@ class Myclasses{
 		//阻塞数组----是数组而不是list -- 获得更好的性能--有界
 		ArrayBlockingQueue<String> arrayBlockingQueue =
 				new ArrayBlockingQueue<>(100,true);//true 是否使用公平锁
-		//只有使用这两个方法才能实现阻塞
+		//只有使用这两个方法才能实现阻塞--可以指定超时时间
 		arrayBlockingQueue.take();
 		arrayBlockingQueue.put("");
+		arrayBlockingQueue.offer("");
+		arrayBlockingQueue.poll();
 		//阻塞链表-----同上只是数组的链表形式---有界
 		LinkedBlockingQueue<String> linkedBlockingQueue=
 				new LinkedBlockingQueue<>();
@@ -64,7 +66,7 @@ class Myclasses{
 		linkedTransferQueue.tryTransfer("", 100000,TimeUnit.HOURS);//等待指定的时间
 		//首先所有的集合对象使用 这个方法都能编程线程同步的对象
 		Collections.synchronizedMap(new HashMap<>());
-		//并发map
+		//并发map  实现方法  分布加锁 segment 和hashentry
 		ConcurrentHashMap<String, String> concurrentHashMap=
 				 new ConcurrentHashMap<>();
 		//并发双向队列
@@ -81,6 +83,7 @@ class Myclasses{
 		//解决以便进行数组修改一边进行遍历itertol的时候报错
 		CopyOnWriteArrayList<String> copyOnWriteArrayList=
 				new CopyOnWriteArrayList<>();
+		// 读锁  这个方法其实是但当使用put方法的时候将原来的数组进行一次copy put结束后将引用变成新数组---解决put+get的脏读 问题
 		CopyOnWriteArraySet<String> copyOnWriteArraySet=
 				new CopyOnWriteArraySet<>();
 	}

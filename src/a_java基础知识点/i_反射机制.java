@@ -37,6 +37,7 @@ public class i_反射机制 {
 		ClassLoader acClassLoader = class1.getClassLoader();
 		//--类的继承和实现接口  获取父对象 和实现的接口
 		class3=class1.getSuperclass();//获取父对象
+	
 		Class<?>[] classes=class2.getInterfaces();//获得接口数组
 		//--返回变量名称
 		String string = class1.getName();//返回类名称

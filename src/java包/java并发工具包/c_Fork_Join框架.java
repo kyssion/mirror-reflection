@@ -11,8 +11,10 @@ import java.util.concurrent.RecursiveTask;
 public class c_Fork_Join框架 {
 	public static void main(String[] args) {
 		ForkJoinPool forkJoinPool = new ForkJoinPool();
+		//forkJoinPool.execute(null);//异步不返回结果
 		MyForkOne myForkOne = new MyForkOne(0, 100);
-		Future<Integer> future= forkJoinPool.submit(myForkOne);
+		//forkJoinPool.invoke(myForkOne);//同步返回结果
+		Future<Integer> future= forkJoinPool.submit(myForkOne);//异步返回结构
 		try {
 			System.out.println(future.get());
 		} catch (InterruptedException | ExecutionException e) {
@@ -57,11 +59,22 @@ class MyForkOne extends RecursiveTask<Integer>{//一般使用forkjoinTask的实�
 			int middle = (start+end)/2;
 			MyForkOne myForkOne = new MyForkOne(start, middle);
 			MyForkOne myForkOne2= new MyForkOne(middle+1, end);
-			myForkOne.fork();//执行子程序 这个方法将会自动的调用compute方法
-			myForkOne2.fork();
-			int one= myForkOne.join();//等待返回相关的数据
-			int two = myForkOne2.join();
-			sum=one+two;
+			//fork异步执行
+			Future<Integer> future=myForkOne.fork();//执行子程序 这个方法将会自动的调用compute方法
+			Future<Integer> future2=myForkOne2.fork();
+			//myForkOne.invoke();
+			//int one= myForkOne.join();//等待返回相关的数据
+			//int two = myForkOne2.join();
+			
+			//fork()--执行新的部分 join等待返回结果
+			myForkOne.fork();
+			myForkOne.join();
+			try {
+				sum=future.get()+future2.get();
+			} catch (InterruptedException | ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return sum;
 	}

@@ -2,7 +2,7 @@ package javaEE.c_listener.httpsession绑定钝化活化;
 
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
-//判断java是否加入到session作用域中还是移出session作用域，动态的使用这个方法
+//判断javabean是否加入到session作用域中还是移出session作用域，动态的使用这个方法
 public class Javabean_for_httpsessionbindingListener implements HttpSessionBindingListener{
 	private String name;
 	private String id;

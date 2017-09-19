@@ -18,8 +18,8 @@ public class a_同步对象并发工具类 {
 	public void two() throws InterruptedException {
 		// 事件计数器共享类 -- 创建的时候声明一个时间计数器 （可以设置超时时间等效果）当计数器为零的时候await（）的线程可以进行运行
 		CountDownLatch countDownLatch = new CountDownLatch(10);
-		countDownLatch.countDown();// 让计数器加1
-		countDownLatch.await();// 进行等待...countDownLathch--计数器减一
+		countDownLatch.countDown();// 让计数器减1
+		countDownLatch.await();// 当计数器不是0的时候进行等待...countDownLathch
 		countDownLatch.getCount();//返回当前的计数器
 	}
 	public void three() throws InterruptedException, BrokenBarrierException {
@@ -32,7 +32,6 @@ public class a_同步对象并发工具类 {
 				System.out.println("htht");
 			}
 		});
-		// 这个方法不会释放锁
 		cyclicBarrier.await();// 将会将这个线程进行等待之 当等待的数量够了构造函数传入的等待值之后将会让等待的线程继续执行下去
 		cyclicBarrier.reset();// 重新计数
 	}
