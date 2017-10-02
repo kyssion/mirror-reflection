@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!-- 
+<!--
+        jsp相关标签命令的使用方法
 					jsp指令标识
 		一.page指令--为整个页面的定义的属性
 				1.language	-定义jsp页面使用的语言目前只能使用java
@@ -29,8 +30,8 @@
 	</jsp:include>
 	<!-- 创建一个javabean 实例 名字为123--  beanname + type(和class可以属性相同) ==id>-->
 	<jsp:useBean id="myjsp" class="javaEE.Myjavabean" scope="session"><!-- 还存在两个属性beanname(完整类名)和type(bean类型)这两个等于class属性 -->
-		<!-- 
-				为添加的属性进行赋值 
+		<!--
+				为添加的属性进行赋值
 			name-表示一个在javabean范围内的对象实例-通常和javabean标签的id属性相同
 			property- 	属性赋值-当使用*的时候 将会自动加request中的请求参数按照Javabean中的参数的名称意义对应的赋值
 								当使用是一个字符串的时候就将会讲request中的和字符串相同的属性进行赋值
