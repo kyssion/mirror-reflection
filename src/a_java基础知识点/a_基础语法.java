@@ -105,7 +105,13 @@ public class a_基础语法 {
 			return String.valueOf(this.nCode);
 		}
 	}
+
+	Light[] lights= Light.values();//获得所有包含的枚举
+	Light light =Light.valueOf("RED");//获得指定的枚举
+
 	final int a=0;
+
+	//java 注解的方法
 	/*
 	 * Java包注释
 	 * 
