@@ -14,7 +14,6 @@ public class b_垃圾回收机制 {
 	@Override
 	public void finalize()  {
 		//finalize()是Object的protected方法，子类可以覆盖该方法以实现资源清理工作，GC在回收对象之前调用该方法。
-
 		// -需要显示地调用垃圾回收方法(System.gc())，并且需要有new出来
 		// -的尚未被销毁的匿名对象的存在（调用其它语言暂不作考虑），finalizze()方
 		// -法才会被调用虽然这个请求机制提供给程序员一个启动 GC 过程的机会，
