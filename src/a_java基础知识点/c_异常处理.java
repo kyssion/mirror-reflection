@@ -39,6 +39,7 @@ public class c_异常处理 {
 	class Rt001 {
 		public void oo() {
 			Numbertest n = new Numbertest();
+
 			// 使用try - catch 语句    finally
 			try {
 				System.out.println("商=" + n.shang(1, -3));
@@ -71,6 +72,8 @@ public class c_异常处理 {
 	 * 
 	 * 4.方法解释 getMessage() //输出异常的信息 printStackTrace() //输出导致异常更为详细的信息 
 	 */
+
+
 	//引申 java7--- 自动关闭资源  --- 待关闭的资源必须实现AutoCloseable或者Closeable接口  实现其中的close()方法
 	class Auto implements AutoCloseable{
 		@Override
