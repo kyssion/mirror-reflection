@@ -1,6 +1,6 @@
 package a_java基础知识点;
 
-import java.io.Closeable;
+import java.io.*;
 
 public class c_异常处理 {
 	//首先自定以异常类  必须带一个带有String参数类型的构造参数
@@ -52,8 +52,7 @@ public class c_异常处理 {
 			} catch (Exception y) {
 				System.out.println(y.getMessage());
 				y.printStackTrace();
-			}
-			finally {
+			} finally {
 				System.out.println("finally!");
 			} //// finally不管发没发生异常都会被执行
 		}
@@ -73,8 +72,8 @@ public class c_异常处理 {
 	 * 
 	 * 4.方法解释 getMessage() //输出异常的信息 printStackTrace() //输出导致异常更为详细的信息 
 	 */
-	
-	
+
+
 	//引申 java7--- 自动关闭资源  --- 待关闭的资源必须实现AutoCloseable或者Closeable接口  实现其中的close()方法
 	class Auto implements AutoCloseable{
 		@Override
@@ -87,6 +86,16 @@ public class c_异常处理 {
 	
 	//之后 当使用try-catch-finally 将会自动的添加 关闭资源的方法
 	public void hehe() {
+		//高级资源自动关闭写法
+		try(
+				InputStream inputStream = new FileInputStream("sdfsdf");
+				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))
+		){
+			bufferedReader.lines();
+		}catch (Exception e){
+
+		}
+
 		try {
 			Auto ceshi = new Auto();
 			
