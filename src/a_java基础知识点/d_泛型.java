@@ -30,11 +30,14 @@ class ThisisT<T extends Father,V>{
 		//
 		t.thisisFatherMehthod();
 	}
-	//? 通配符  其实和T所带表的意义是是相同的 但是 ? 通配符是为了解决   函数 内部的方法调用 泛型类的时候所采用的因为泛型类中不能使用除了已经声明的泛型之外的字母
+	//? 通配符  其实和T所带表的意义是是相同的
+	// 但是 ? 通配符是为了解决函数 内部的方法调用 泛型类的时候所采用的因为泛型类中不能使用除了已经声明的泛型之外的字母
 	//其余的 T等是一样的方法
 	public void method(ArrayList<?> arrayList){//这样这个方法就能接受除了T V 类型之外的其他类型
 		
 	}
+
+
 }
 class Father{
 	public void thisisFatherMehthod(){}
@@ -90,9 +93,7 @@ class AAA extends BBB<Integer>{//范型继承可以是已知的类型使用使�
 }
 class Other{
 	//?通配符表示一般的匹配相关的有嗯来约束一类的类型
-	class Rong<T>{
-		
-	}
+	class Rong<T>{}
 	class One{}
 	class Two extends One{}
 	class Three extends Two{}
@@ -108,6 +109,7 @@ class Other{
 		//list.set(0, new Three());//报错
 		List<? super Two> list2 = new ArrayList<>();
 		list2.add(new Three());//适因为内部一定知道相关 术语上转型
+		One two1= (Two) list2.get(0);
 	}
 }
 
