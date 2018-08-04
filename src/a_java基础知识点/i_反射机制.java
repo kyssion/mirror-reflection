@@ -3,6 +3,7 @@ package a_java基础知识点;
 import java.io.File;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
+import java.lang.annotation.Target;
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
@@ -52,12 +53,13 @@ public class i_反射机制 {
 		Constructor<?> constructor = class1.getConstructor(Integer.class,String.class);//参数为变长数组 -返回带传入class 类参数的构造函数
 		Constructor<?>[] constructors = class1.getConstructors();//返回这个class所含有的所有方法--不包括继承的方法--只能使用自己定义的构造方法
 		//--反射注解相关
-		
+
+
 		Annotation annotation = class1.getAnnotation(hehehe.class);//返回当前类中是否存在出传入的注解 有的时候将会进行返回相应的注解
 		//class1.isAnnotationPresent(Ceshi2.class);//判断是否存在一个注解
 		Annotation[] annotations = class1.getAnnotations();//返回类中所有的注解包括继承的
 		Annotation[] annotations2= class1.getDeclaredAnnotations();//f返回类中直接继承的元素
-		
+
 		//--成员变量
 		Field field =class1.getDeclaredField("xixi");//返回变量名称为 field 的直接成员变量名称
 		Field field2= class1.getField("xxixi");//返回变量名称包括父元素的成员变量
@@ -66,8 +68,13 @@ public class i_反射机制 {
 		Field[] fields2 = class1.getFields();//返回所有的成员变量 包括父类进行继承的变量
 		//--成员方法
 		//di k le de
-		Method method = class1.getDeclaredMethod("xx", Integer.class);//返回名称为xx 参数为后面的变长数组的直接成员方法
-		Method method2 = class1.getMethod("x", Integer.class);//上面方法 处理继承版
+		//返回名称为xx 参数为后面的变长数组的直接成员方法
+		Method method = class1.getDeclaredMethod("xx", Integer.class);
+		//上面方法 处理继承版
+		Method method2 = class1.getMethod("x", Integer.class);
+		Method[] methods=class1.getDeclaredMethods();
+		Method[] methods1=class1.getMethods();
+		Method method3=class1.getEnclosingMethod();
 		//----判断方法
 		boolean b = class1.isArray();
 		class1.isAnnotation();
@@ -90,16 +97,27 @@ public class i_反射机制 {
 		accessibleObject.getAnnotation(hehehe.class);
 		accessibleObject.getAnnotations();
 		accessibleObject.setAccessible(true);//!!!---设置当前东西的访问性--- 设置为true的时候将可以实现对私有变量的  该便似有变量和成员的访问性
+
+
+
 		//accessibleObject.setAccessible(new String(){"1"}, flag);
 		//construction 注解类型---  注解表示构造方法生成的类型
 		Constructor<?> constructor = (Constructor<Integer>) new Integer(12).getClass().getConstructor(Integer.class);
 		constructor=class1.getConstructor(Integer.class,String.class);
-		
+
 		//---有关注解的方法---继承自父类
 			//特殊的注解方法
 		Annotation[][] annotation = constructor.getParameterAnnotations();//返回二维数组 第一维表示构造函数 第二位表示 注释类型--因为一个类可能有多个构造函数
-		Annotation[] annotations3=constructor.getAnnotations();
-		
+		if(annotation[0][0] instanceof Target){
+			Target targets= (Target) annotation[0][0];
+		}
+
+		Target target = constructor.getAnnotation(Target.class);
+
+		Class<Target> class3=Target.class;
+
+		annotation[0][0].annotationType();
+
 		constructor.getDeclaringClass();//表明生成这个对象所对应的类
 		constructor.getName();//	返回构造函数的名称
 		//---构造函数参数
@@ -121,7 +139,7 @@ public class i_反射机制 {
 		String name = method.getName();//返回方法名称
 		Annotation[][] annotations = method.getParameterAnnotations();//返回一个注解的二维数组 --同上面
 		Annotation[] annotations2=method.getAnnotations();
-		Class<?>[] class3 = method.getParameterTypes();//返回参数数组
+		Class<?>[] class33 = method.getParameterTypes();//返回参数数组
 		Class<?> class4 = method.getReturnType();//返回返回值数组
 		int count=method.getParameterCount();//返回参数的数量
 		Parameter[] parameters=method.getParameters();//返回参数列表
@@ -129,6 +147,7 @@ public class i_反射机制 {
 		parameters[0].getType();//返回类型的class数组
 		//参数类型没有注入 参数
 		method.invoke(new ThisisCeshe(), null);//类似 FIeld的get方法--调用指定的实例的一个此method指定的方法
+
 		int aa = class1.getModifiers();//返回参数类型表示方法
 		//Array 反射类
 		//创建一个第二个参数是边长参数的组 第一个参数是指定类型的数组
