@@ -18,7 +18,7 @@ mirror-reflection 是一个高性能的java反射类库的一个封装,旨在降
 - 其他依赖
   - 无第三方依赖
 
-## mirror使用方法
+## mirror-refllection 使用方法
 
 ### 1. reflector和reflectorFactory类
 
@@ -93,4 +93,6 @@ getValue|name:string,item:class|获取名称微string类型为item类型的值
 setValue|name:string,value:object|为名称微name的对象赋value值
 invoke|name:string,item:class,params:Object[]|运行名称为name,返回值为item(可以为null),参数为params的方法
 
+## 开源协议和授权
 
+oot is Open Source software released under the [Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0.html).
