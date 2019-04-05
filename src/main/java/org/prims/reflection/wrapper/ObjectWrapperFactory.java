@@ -1,7 +1,7 @@
 package org.prims.reflection.wrapper;
 
 
-import org.prims.reflection.meta.MirrorObject;
+import org.prims.reflection.mirror.MirrorObject;
 
 /**
  * @author Clinton Begin

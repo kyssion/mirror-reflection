@@ -1,8 +1,8 @@
 package org.prims.reflection.wrapper;
 
 
-import org.prims.reflection.meta.MirrorObject;
-import org.prims.reflection.meta.SystemMetaObject;
+import org.prims.reflection.mirror.MirrorObject;
+import org.prims.reflection.mirror.SystemMirrorObject;
 import org.prims.reflection.object.ObjectFactory;
 import org.prims.reflection.property.PropertyTokenizer;
 
@@ -67,7 +67,7 @@ public class MapWrapper extends BaseWrapper {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
             MirrorObject metaValue = mirrorObject.mirrorObjectForProperty(prop.getIndexedName());
-            if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
+            if (metaValue == SystemMirrorObject.NULL_META_OBJECT) {
                 return Object.class;
             } else {
                 return metaValue.getSetterType(prop.getChildren());
@@ -86,7 +86,7 @@ public class MapWrapper extends BaseWrapper {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
             MirrorObject metaValue = mirrorObject.mirrorObjectForProperty(prop.getIndexedName());
-            if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
+            if (metaValue == SystemMirrorObject.NULL_META_OBJECT) {
                 return Object.class;
             } else {
                 return metaValue.getGetterType(prop.getChildren());
@@ -111,7 +111,7 @@ public class MapWrapper extends BaseWrapper {
         if (prop.hasNext()) {
             if (map.containsKey(prop.getIndexedName())) {
                 MirrorObject metaValue = mirrorObject.mirrorObjectForProperty(prop.getIndexedName());
-                if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
+                if (metaValue == SystemMirrorObject.NULL_META_OBJECT) {
                     return true;
                 } else {
                     return metaValue.hasGetter(prop.getChildren());

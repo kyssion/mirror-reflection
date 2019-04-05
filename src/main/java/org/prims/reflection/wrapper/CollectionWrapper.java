@@ -1,6 +1,6 @@
 package org.prims.reflection.wrapper;
 
-import org.prims.reflection.meta.MirrorObject;
+import org.prims.reflection.mirror.MirrorObject;
 import org.prims.reflection.object.ObjectFactory;
 import org.prims.reflection.property.PropertyTokenizer;
 

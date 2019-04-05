@@ -1,7 +1,7 @@
 package test;
 
 
-import org.prims.reflection.meta.MirrorObject;
+import org.prims.reflection.mirror.MirrorObject;
 
 import java.util.HashMap;
 import java.util.Map;

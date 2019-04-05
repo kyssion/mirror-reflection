@@ -1,4 +1,4 @@
-package org.prims.reflection.meta;
+package org.prims.reflection.mirror;
 
 import org.prims.reflection.DefaultReflectorFactory;
 import org.prims.reflection.ReflectorFactory;
@@ -57,7 +57,7 @@ public class MirrorObject {
                                          ObjectWrapperFactory objectWrapperFactory,
                                          ReflectorFactory reflectorFactory) {
         if (object == null) {
-            return SystemMetaObject.NULL_META_OBJECT;
+            return SystemMirrorObject.NULL_META_OBJECT;
         } else {
             return new MirrorObject(object, objectFactory, objectWrapperFactory, reflectorFactory);
         }
@@ -116,7 +116,7 @@ public class MirrorObject {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
             MirrorObject metaValue = mirrorObjectForProperty(prop.getIndexedName());
-            if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
+            if (metaValue == SystemMirrorObject.NULL_META_OBJECT) {
                 return null;
             } else {
                 return metaValue.getValue(prop.getChildren());
@@ -130,7 +130,7 @@ public class MirrorObject {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
             MirrorObject metaValue = mirrorObjectForProperty(prop.getIndexedName());
-            if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
+            if (metaValue == SystemMirrorObject.NULL_META_OBJECT) {
                 if (value == null) {
                     // don't instantiate child path if value is null
                     return;
@@ -152,7 +152,7 @@ public class MirrorObject {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
             MirrorObject metaValue = mirrorObjectForProperty(prop.getIndexedName());
-            if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
+            if (metaValue == SystemMirrorObject.NULL_META_OBJECT) {
                 return null;
             } else {
                 return metaValue.invoke(prop.getChildren(),params);

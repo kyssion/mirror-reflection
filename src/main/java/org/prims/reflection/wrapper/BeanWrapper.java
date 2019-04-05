@@ -3,9 +3,9 @@ package org.prims.reflection.wrapper;
 import org.prims.reflection.exception.ExceptionUtil;
 import org.prims.reflection.exception.ReflectionException;
 import org.prims.reflection.agent.Agent;
-import org.prims.reflection.meta.MirrorClass;
-import org.prims.reflection.meta.MirrorObject;
-import org.prims.reflection.meta.SystemMetaObject;
+import org.prims.reflection.mirror.MirrorClass;
+import org.prims.reflection.mirror.MirrorObject;
+import org.prims.reflection.mirror.SystemMirrorObject;
 import org.prims.reflection.object.ObjectFactory;
 import org.prims.reflection.property.PropertyTokenizer;
 
@@ -71,7 +71,7 @@ public class BeanWrapper extends BaseWrapper {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
             MirrorObject metaValue = mirrorObject.mirrorObjectForProperty(prop.getIndexedName());
-            if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
+            if (metaValue == SystemMirrorObject.NULL_META_OBJECT) {
                 return mirrorClass.getSetterType(name);
             } else {
                 return metaValue.getSetterType(prop.getChildren());
@@ -86,7 +86,7 @@ public class BeanWrapper extends BaseWrapper {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
             MirrorObject metaValue = mirrorObject.mirrorObjectForProperty(prop.getIndexedName());
-            if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
+            if (metaValue == SystemMirrorObject.NULL_META_OBJECT) {
                 return mirrorClass.getGetterType(name);
             } else {
                 return metaValue.getGetterType(prop.getChildren());
@@ -102,7 +102,7 @@ public class BeanWrapper extends BaseWrapper {
         if (prop.hasNext()) {
             if (mirrorClass.hasSetter(prop.getIndexedName())) {
                 MirrorObject metaValue = mirrorObject.mirrorObjectForProperty(prop.getIndexedName());
-                if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
+                if (metaValue == SystemMirrorObject.NULL_META_OBJECT) {
                     return mirrorClass.hasSetter(name);
                 } else {
                     return metaValue.hasSetter(prop.getChildren());
@@ -121,7 +121,7 @@ public class BeanWrapper extends BaseWrapper {
         if (prop.hasNext()) {
             if (mirrorClass.hasGetter(prop.getIndexedName())) {
                 MirrorObject metaValue = mirrorObject.mirrorObjectForProperty(prop.getIndexedName());
-                if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
+                if (metaValue == SystemMirrorObject.NULL_META_OBJECT) {
                     return mirrorClass.hasGetter(name);
                 } else {
                     return metaValue.hasGetter(prop.getChildren());

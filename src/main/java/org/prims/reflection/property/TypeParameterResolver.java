@@ -3,6 +3,9 @@ package org.prims.reflection.property;
 import java.lang.reflect.*;
 import java.util.Arrays;
 
+/**
+ * 针对java类型体系的特殊封装
+ */
 public class TypeParameterResolver {
 
     public static Type resolveFieldType(Field field, Type srcType) {
@@ -10,6 +13,7 @@ public class TypeParameterResolver {
         Class<?> declaringClass = field.getDeclaringClass();
         return resolveType(fieldType, srcType, declaringClass);
     }
+
     public static Type resolveReturnType(Method method, Type srcType) {
         Type returnType = method.getGenericReturnType();
         Class<?> declaringClass = method.getDeclaringClass();
@@ -109,7 +113,7 @@ public class TypeParameterResolver {
 
         if (clazz == declaringClass) {
             Type[] bounds = typeVar.getBounds();
-            if(bounds.length > 0) {
+            if (bounds.length > 0) {
                 return bounds[0];
             }
             return Object.class;
@@ -173,7 +177,7 @@ public class TypeParameterResolver {
                 newParentArgs[i] = parentTypeArgs[i];
             }
         }
-        return noChange ? parentType : new ParameterizedTypeImpl((Class<?>)parentType.getRawType(), null, newParentArgs);
+        return noChange ? parentType : new ParameterizedTypeImpl((Class<?>) parentType.getRawType(), null, newParentArgs);
     }
 
     private TypeParameterResolver() {

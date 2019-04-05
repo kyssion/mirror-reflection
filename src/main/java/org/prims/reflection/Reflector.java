@@ -579,6 +579,10 @@ public class Reflector {
     }
 
     public List<Agent> getMethod(String methodName) {
+        List<Agent> agents = allMethod.get(methodName);
+        if (agents==null||agents.size()==0){
+            throw new ReflectionException("There is no method for method named '" + methodName + "'");
+        }
         return allMethod.get(methodName);
     }
 }

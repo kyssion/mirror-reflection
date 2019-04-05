@@ -1,10 +1,11 @@
-package org.prims.reflection.meta;
+package org.prims.reflection.mirror;
 
 import org.prims.reflection.Reflector;
 import org.prims.reflection.ReflectorFactory;
 import org.prims.reflection.agent.GetFieldAgent;
 import org.prims.reflection.agent.Agent;
 import org.prims.reflection.agent.MethodAgent;
+import org.prims.reflection.exception.ReflectionException;
 import org.prims.reflection.property.PropertyTokenizer;
 import org.prims.reflection.property.TypeParameterResolver;
 import org.prims.reflection.util.TypeEnum;
@@ -168,7 +169,7 @@ public class MirrorClass {
                 return agent;
             }
         }
-        return null;
+        throw new ReflectionException("There is no method for method named '" + name + "'");
     }
 
     public boolean isInMethod(Agent invokers, Class<?>[] paramType) {
