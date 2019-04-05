@@ -1,4 +1,4 @@
-package org.prims.reflection.invoker;
+package org.prims.reflection.agent;
 
 import org.prims.reflection.Reflector;
 
@@ -6,7 +6,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class MethodInvoker implements Invoker {
+public class MethodAgent implements Agent {
 
     private final Class<?> type;
     private final Class<?> returnType;
@@ -14,7 +14,7 @@ public class MethodInvoker implements Invoker {
     private final Method method;
     private final Annotation[] annotations;
 
-    public MethodInvoker(Method method) {
+    public MethodAgent(Method method) {
         this.method = method;
         paramType= method.getParameterTypes();
         returnType = method.getReturnType();

@@ -2,7 +2,7 @@ package org.prims.reflection.wrapper;
 
 
 import org.prims.reflection.exception.ReflectionException;
-import org.prims.reflection.meta.MetaObject;
+import org.prims.reflection.meta.MirrorObject;
 import org.prims.reflection.property.PropertyTokenizer;
 
 import java.util.List;
@@ -15,17 +15,17 @@ import java.util.Map;
 public abstract class BaseWrapper implements ObjectWrapper {
 
     protected static final Object[] NO_ARGUMENTS = new Object[0];
-    protected final MetaObject metaObject;
+    protected final MirrorObject mirrorObject;
 
-    protected BaseWrapper(MetaObject metaObject) {
-        this.metaObject = metaObject;
+    protected BaseWrapper(MirrorObject mirrorObject) {
+        this.mirrorObject = mirrorObject;
     }
 
     protected Object resolveCollection(PropertyTokenizer prop, Object object) {
         if ("".equals(prop.getName())) {
             return object;
         } else {
-            return metaObject.getValue(prop.getName());
+            return mirrorObject.getValue(prop.getName());
         }
     }
 

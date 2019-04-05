@@ -2,11 +2,12 @@ package org.prims.reflection.meta;
 
 import org.prims.reflection.Reflector;
 import org.prims.reflection.ReflectorFactory;
-import org.prims.reflection.invoker.GetFieldInvoker;
-import org.prims.reflection.invoker.Invoker;
-import org.prims.reflection.invoker.MethodInvoker;
+import org.prims.reflection.agent.GetFieldAgent;
+import org.prims.reflection.agent.Agent;
+import org.prims.reflection.agent.MethodAgent;
 import org.prims.reflection.property.PropertyTokenizer;
 import org.prims.reflection.property.TypeParameterResolver;
+import org.prims.reflection.util.TypeEnum;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -18,27 +19,27 @@ import java.util.List;
 
 /**
  * 对reflector的一层封装,更加方便的获取一个Class对象中geter和setter的各种信息
- * 相比较MetaObject class 是提供了name级别的层级解析功能
+ * 相比较mirrorObject class 是提供了name级别的层级解析功能
  */
-public class MetaClass {
+public class MirrorClass {
 
     private final ReflectorFactory reflectorFactory;
     private final Reflector reflector;
 
-    private MetaClass(Class<?> type, ReflectorFactory reflectorFactory) {
+    private MirrorClass(Class<?> type, ReflectorFactory reflectorFactory) {
         this.reflectorFactory = reflectorFactory;
         this.reflector = reflectorFactory.findForClass(type);
     }
 
-    public static MetaClass forClass(Class<?> type, ReflectorFactory reflectorFactory) {
-        return new MetaClass(type, reflectorFactory);
+    public static MirrorClass forClass(Class<?> type, ReflectorFactory reflectorFactory) {
+        return new MirrorClass(type, reflectorFactory);
     }
 
 
     //通过名称获取本身的一个field的MetaClass
-    public MetaClass metaClassForProperty(String name) {
+    public MirrorClass metaClassForProperty(String name) {
         Class<?> propType = reflector.getGetterType(name);
-        return MetaClass.forClass(propType, reflectorFactory);
+        return MirrorClass.forClass(propType, reflectorFactory);
     }
 
     //支持xxx.xxx.xxx这种格式
@@ -72,7 +73,7 @@ public class MetaClass {
     public Class<?> getSetterType(String name) {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
-            MetaClass metaProp = metaClassForProperty(prop.getName());
+            MirrorClass metaProp = metaClassForProperty(prop.getName());
             return metaProp.getSetterType(prop.getChildren());
         } else {
             return reflector.getSetterType(prop.getName());
@@ -82,16 +83,16 @@ public class MetaClass {
     public Class<?> getGetterType(String name) {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
-            MetaClass metaProp = metaClassForProperty(prop);
+            MirrorClass metaProp = metaClassForProperty(prop);
             return metaProp.getGetterType(prop.getChildren());
         }
         // issue #506. Resolve the type inside a Collection Object
         return getGetterType(prop);
     }
 
-    private MetaClass metaClassForProperty(PropertyTokenizer prop) {
+    private MirrorClass metaClassForProperty(PropertyTokenizer prop) {
         Class<?> propType = getGetterType(prop);
-        return MetaClass.forClass(propType, reflectorFactory);
+        return MirrorClass.forClass(propType, reflectorFactory);
     }
 
     private Class<?> getGetterType(PropertyTokenizer prop) {
@@ -115,16 +116,16 @@ public class MetaClass {
 
     private Type getGenericGetterType(String propertyName) {
         try {
-            Invoker invoker = reflector.getGetInvoker(propertyName);
-            if (invoker instanceof MethodInvoker) {
-                Field _method = MethodInvoker.class.getDeclaredField("method");
+            Agent agent = reflector.getGetInvoker(propertyName);
+            if (agent instanceof MethodAgent) {
+                Field _method = MethodAgent.class.getDeclaredField("method");
                 _method.setAccessible(true);
-                Method method = (Method) _method.get(invoker);
+                Method method = (Method) _method.get(agent);
                 return TypeParameterResolver.resolveReturnType(method, reflector.getType());
-            } else if (invoker instanceof GetFieldInvoker) {
-                Field _field = GetFieldInvoker.class.getDeclaredField("field");
+            } else if (agent instanceof GetFieldAgent) {
+                Field _field = GetFieldAgent.class.getDeclaredField("field");
                 _field.setAccessible(true);
-                Field field = (Field) _field.get(invoker);
+                Field field = (Field) _field.get(agent);
                 return TypeParameterResolver.resolveFieldType(field, reflector.getType());
             }
         } catch (NoSuchFieldException | IllegalAccessException ignored) {
@@ -136,7 +137,7 @@ public class MetaClass {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
             if (reflector.hasSetter(prop.getName())) {
-                MetaClass metaProp = metaClassForProperty(prop.getName());
+                MirrorClass metaProp = metaClassForProperty(prop.getName());
                 return metaProp.hasSetter(prop.getChildren());
             } else {
                 return false;
@@ -150,7 +151,7 @@ public class MetaClass {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
             if (reflector.hasGetter(prop.getName())) {
-                MetaClass metaProp = metaClassForProperty(prop);
+                MirrorClass metaProp = metaClassForProperty(prop);
                 return metaProp.hasGetter(prop.getChildren());
             } else {
                 return false;
@@ -160,26 +161,39 @@ public class MetaClass {
         }
     }
 
-    public Invoker getMethod(String name, Class<?>[] paramType) {
-        List<Invoker> allMethod = reflector.getMethod(name);
-        for(Invoker invoker : allMethod){
-            if(isInMethod(invoker,paramType)){
-                return invoker;
+    public Agent getMethod(String name, Class<?>[] paramType) {
+        List<Agent> allMethod = reflector.getMethod(name);
+        for (Agent agent : allMethod) {
+            if (isInMethod(agent, paramType)) {
+                return agent;
             }
         }
         return null;
     }
 
-    public boolean isInMethod(Invoker invokers, Class<?>[] paramType) {
+    public boolean isInMethod(Agent invokers, Class<?>[] paramType) {
         Class<?>[] params = invokers.getParamType();
-        return Arrays.equals(params,paramType);
+        if (params.length != paramType.length) {
+            return false;
+        }
+        params = specificationType(params);
+        paramType = specificationType(paramType);
+        return Arrays.equals(params, paramType);
     }
 
-    public Invoker getGetInvoker(String name) {
+    private Class<?>[] specificationType(Class<?>[] types) {
+        Class<?>[] newTypes = new Class<?>[types.length];
+        for (int index = 0; index < types.length; index++) {
+            newTypes[index] = TypeEnum.getType(types[index]);
+        }
+        return newTypes;
+    }
+
+    public Agent getGetInvoker(String name) {
         return reflector.getGetInvoker(name);
     }
 
-    public Invoker getSetInvoker(String name) {
+    public Agent getSetInvoker(String name) {
         return reflector.getSetInvoker(name);
     }
 
@@ -190,7 +204,7 @@ public class MetaClass {
             if (propertyName != null) {
                 builder.append(propertyName);
                 builder.append(".");
-                MetaClass metaProp = metaClassForProperty(propertyName);
+                MirrorClass metaProp = metaClassForProperty(propertyName);
                 metaProp.buildProperty(prop.getChildren(), builder);
             }
         } else {

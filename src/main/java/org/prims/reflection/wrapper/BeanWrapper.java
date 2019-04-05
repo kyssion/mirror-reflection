@@ -2,9 +2,9 @@ package org.prims.reflection.wrapper;
 
 import org.prims.reflection.exception.ExceptionUtil;
 import org.prims.reflection.exception.ReflectionException;
-import org.prims.reflection.invoker.Invoker;
-import org.prims.reflection.meta.MetaClass;
-import org.prims.reflection.meta.MetaObject;
+import org.prims.reflection.agent.Agent;
+import org.prims.reflection.meta.MirrorClass;
+import org.prims.reflection.meta.MirrorObject;
 import org.prims.reflection.meta.SystemMetaObject;
 import org.prims.reflection.object.ObjectFactory;
 import org.prims.reflection.property.PropertyTokenizer;
@@ -18,17 +18,17 @@ public class BeanWrapper extends BaseWrapper {
 
     private final Object object;
 
-    private final MetaClass metaClass;
+    private final MirrorClass mirrorClass;
 
-    public BeanWrapper(MetaObject metaObject, Object object) {
-        super(metaObject);
+    public BeanWrapper(MirrorObject mirrorObject, Object object) {
+        super(mirrorObject);
         this.object = object;
-        this.metaClass = MetaClass.forClass(object.getClass(), metaObject.getReflectorFactory());
+        this.mirrorClass = MirrorClass.forClass(object.getClass(), mirrorObject.getReflectorFactory());
     }
 
     @Override
     public Class<?> getType() {
-        return this.metaClass.getType();
+        return this.mirrorClass.getType();
     }
 
     @Override
@@ -53,31 +53,31 @@ public class BeanWrapper extends BaseWrapper {
 
     @Override
     public String findProperty(String name, boolean useCamelCaseMapping) {
-        return metaClass.findProperty(name, useCamelCaseMapping);
+        return mirrorClass.findProperty(name, useCamelCaseMapping);
     }
 
     @Override
     public String[] getGetterNames() {
-        return metaClass.getGetterNames();
+        return mirrorClass.getGetterNames();
     }
 
     @Override
     public String[] getSetterNames() {
-        return metaClass.getSetterNames();
+        return mirrorClass.getSetterNames();
     }
 
     @Override
     public Class<?> getSetterType(String name) {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
-            MetaObject metaValue = metaObject.metaObjectForProperty(prop.getIndexedName());
+            MirrorObject metaValue = mirrorObject.mirrorObjectForProperty(prop.getIndexedName());
             if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
-                return metaClass.getSetterType(name);
+                return mirrorClass.getSetterType(name);
             } else {
                 return metaValue.getSetterType(prop.getChildren());
             }
         } else {
-            return metaClass.getSetterType(name);
+            return mirrorClass.getSetterType(name);
         }
     }
 
@@ -85,14 +85,14 @@ public class BeanWrapper extends BaseWrapper {
     public Class<?> getGetterType(String name) {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
-            MetaObject metaValue = metaObject.metaObjectForProperty(prop.getIndexedName());
+            MirrorObject metaValue = mirrorObject.mirrorObjectForProperty(prop.getIndexedName());
             if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
-                return metaClass.getGetterType(name);
+                return mirrorClass.getGetterType(name);
             } else {
                 return metaValue.getGetterType(prop.getChildren());
             }
         } else {
-            return metaClass.getGetterType(name);
+            return mirrorClass.getGetterType(name);
         }
     }
 
@@ -100,10 +100,10 @@ public class BeanWrapper extends BaseWrapper {
     public boolean hasSetter(String name) {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
-            if (metaClass.hasSetter(prop.getIndexedName())) {
-                MetaObject metaValue = metaObject.metaObjectForProperty(prop.getIndexedName());
+            if (mirrorClass.hasSetter(prop.getIndexedName())) {
+                MirrorObject metaValue = mirrorObject.mirrorObjectForProperty(prop.getIndexedName());
                 if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
-                    return metaClass.hasSetter(name);
+                    return mirrorClass.hasSetter(name);
                 } else {
                     return metaValue.hasSetter(prop.getChildren());
                 }
@@ -111,7 +111,7 @@ public class BeanWrapper extends BaseWrapper {
                 return false;
             }
         } else {
-            return metaClass.hasSetter(name);
+            return mirrorClass.hasSetter(name);
         }
     }
 
@@ -119,10 +119,10 @@ public class BeanWrapper extends BaseWrapper {
     public boolean hasGetter(String name) {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
-            if (metaClass.hasGetter(prop.getIndexedName())) {
-                MetaObject metaValue = metaObject.metaObjectForProperty(prop.getIndexedName());
+            if (mirrorClass.hasGetter(prop.getIndexedName())) {
+                MirrorObject metaValue = mirrorObject.mirrorObjectForProperty(prop.getIndexedName());
                 if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
-                    return metaClass.hasGetter(name);
+                    return mirrorClass.hasGetter(name);
                 } else {
                     return metaValue.hasGetter(prop.getChildren());
                 }
@@ -130,17 +130,17 @@ public class BeanWrapper extends BaseWrapper {
                 return false;
             }
         } else {
-            return metaClass.hasGetter(name);
+            return mirrorClass.hasGetter(name);
         }
     }
 
     @Override
-    public MetaObject instantiatePropertyValue(String name, PropertyTokenizer prop, ObjectFactory objectFactory) {
-        MetaObject metaValue;
+    public MirrorObject instantiatePropertyValue(String name, PropertyTokenizer prop, ObjectFactory objectFactory) {
+        MirrorObject metaValue;
         Class<?> type = getSetterType(prop.getName());
         try {
             Object newObject = objectFactory.create(type);
-            metaValue = MetaObject.forObject(newObject, metaObject.getObjectFactory(), metaObject.getObjectWrapperFactory(), metaObject.getReflectorFactory());
+            metaValue = MirrorObject.forObject(newObject, mirrorObject.getObjectFactory(), mirrorObject.getObjectWrapperFactory(), mirrorObject.getReflectorFactory());
             set(prop, newObject);
         } catch (Exception e) {
             throw new ReflectionException("Cannot set value of property '" + name + "' because '" + name + "' is null and cannot be instantiated on instance of " + type.getName() + ". Cause:" + e.toString(), e);
@@ -156,11 +156,11 @@ public class BeanWrapper extends BaseWrapper {
     public Object doInvoke(String name, Object[] params, Object object) {
         Class<?>[] metaParams = new Class[params.length];
         for (int index = 0; index < params.length; index++) {
-            //metaParams[index] = MetaObject.forObject(params).getType();
+            //metaParams[index] = MirrorObject.forObject(params).getType();
             metaParams[index] = params[index].getClass();
         }
         try {
-            Invoker method = metaClass.getMethod(name, metaParams);
+            Agent method = mirrorClass.getMethod(name, metaParams);
             try {
                 return method.invoke(object, params);
             } catch (Throwable t) {
@@ -175,7 +175,7 @@ public class BeanWrapper extends BaseWrapper {
 
     private Object getBeanProperty(PropertyTokenizer prop, Object object) {
         try {
-            Invoker method = metaClass.getGetInvoker(prop.getName());
+            Agent method = mirrorClass.getGetInvoker(prop.getName());
             try {
                 return method.invoke(object, NO_ARGUMENTS);
             } catch (Throwable t) {
@@ -190,7 +190,7 @@ public class BeanWrapper extends BaseWrapper {
 
     private void setBeanProperty(PropertyTokenizer prop, Object object, Object value) {
         try {
-            Invoker method = metaClass.getSetInvoker(prop.getName());
+            Agent method = mirrorClass.getSetInvoker(prop.getName());
             Object[] params = {value};
             try {
                 method.invoke(object, params);

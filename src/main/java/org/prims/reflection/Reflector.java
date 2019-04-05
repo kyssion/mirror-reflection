@@ -2,10 +2,10 @@ package org.prims.reflection;
 
 
 import org.prims.reflection.exception.ReflectionException;
-import org.prims.reflection.invoker.GetFieldInvoker;
-import org.prims.reflection.invoker.Invoker;
-import org.prims.reflection.invoker.MethodInvoker;
-import org.prims.reflection.invoker.SetFieldInvoker;
+import org.prims.reflection.agent.GetFieldAgent;
+import org.prims.reflection.agent.Agent;
+import org.prims.reflection.agent.MethodAgent;
+import org.prims.reflection.agent.SetFieldAgent;
 import org.prims.reflection.property.PropertyNamer;
 import org.prims.reflection.property.TypeParameterResolver;
 
@@ -21,9 +21,9 @@ public class Reflector {
     private final Class<?> type;
     private final String[] readablePropertyNames;
     private final String[] writeablePropertyNames;
-    private final Map<String, List<Invoker>> allMethod = new HashMap<>();
-    private final Map<String, Invoker> setMethods = new HashMap<>();
-    private final Map<String, Invoker> getMethods = new HashMap<>();
+    private final Map<String, List<Agent>> allMethod = new HashMap<>();
+    private final Map<String, Agent> setMethods = new HashMap<>();
+    private final Map<String, Agent> getMethods = new HashMap<>();
     private final Map<String, Class<?>> setTypes = new HashMap<>();
     private final Map<String, Class<?>> getTypes = new HashMap<>();
     private Constructor<?> defaultConstructor;
@@ -145,7 +145,7 @@ public class Reflector {
      */
     private void addGetMethod(String name, Method method) {
         if (isValidPropertyName(name)) {
-            getMethods.put(name, new MethodInvoker(method));
+            getMethods.put(name, new MethodAgent(method));
             //TODO 以后细看,这个东西涉及到java的类型体系,一篇博客https://www.jianshu.com/p/e8eeff12c306
             Type returnType = TypeParameterResolver.resolveReturnType(method, type);
             getTypes.put(name, typeToClass(returnType));
@@ -181,12 +181,12 @@ public class Reflector {
         }
     }
 
-    private void addInvoice(Map<String, List<Invoker>> conflictingSetters, String name, Method method) {
+    private void addInvoice(Map<String, List<Agent>> conflictingSetters, String name, Method method) {
         if (!conflictingSetters.containsKey(name)) {
             conflictingSetters.put(name, new ArrayList<>());
         }
-        Invoker invoker = new MethodInvoker(method);
-        conflictingSetters.get(name).add(invoker);
+        Agent agent = new MethodAgent(method);
+        conflictingSetters.get(name).add(agent);
     }
 
 
@@ -273,7 +273,7 @@ public class Reflector {
      */
     private void addSetMethod(String name, Method method) {
         if (isValidPropertyName(name)) {
-            setMethods.put(name, new MethodInvoker(method));
+            setMethods.put(name, new MethodAgent(method));
             Type[] paramTypes = TypeParameterResolver.resolveParamTypes(method, type);
             setTypes.put(name, typeToClass(paramTypes[0]));
         }
@@ -341,7 +341,7 @@ public class Reflector {
      */
     private void addSetField(Field field) {
         if (isValidPropertyName(field.getName())) {
-            setMethods.put(field.getName(), new SetFieldInvoker(field));
+            setMethods.put(field.getName(), new SetFieldAgent(field));
             Type fieldType = TypeParameterResolver.resolveFieldType(field, type);
             setTypes.put(field.getName(), typeToClass(fieldType));
         }
@@ -354,7 +354,7 @@ public class Reflector {
      */
     private void addGetField(Field field) {
         if (isValidPropertyName(field.getName())) {
-            getMethods.put(field.getName(), new GetFieldInvoker(field));
+            getMethods.put(field.getName(), new GetFieldAgent(field));
             Type fieldType = TypeParameterResolver.resolveFieldType(field, type);
             getTypes.put(field.getName(), typeToClass(fieldType));
         }
@@ -488,8 +488,8 @@ public class Reflector {
      * @param propertyName
      * @return
      */
-    public Invoker getSetInvoker(String propertyName) {
-        Invoker method = setMethods.get(propertyName);
+    public Agent getSetInvoker(String propertyName) {
+        Agent method = setMethods.get(propertyName);
         if (method == null) {
             throw new ReflectionException("There is no setter for property named '" + propertyName + "' in '" + type + "'");
         }
@@ -502,8 +502,8 @@ public class Reflector {
      * @param propertyName
      * @return
      */
-    public Invoker getGetInvoker(String propertyName) {
-        Invoker method = getMethods.get(propertyName);
+    public Agent getGetInvoker(String propertyName) {
+        Agent method = getMethods.get(propertyName);
         if (method == null) {
             throw new ReflectionException("There is no getter for property named '" + propertyName + "' in '" + type + "'");
         }
@@ -578,7 +578,7 @@ public class Reflector {
         return otherConstructor;
     }
 
-    public List<Invoker> getMethod(String methodName) {
+    public List<Agent> getMethod(String methodName) {
         return allMethod.get(methodName);
     }
 }

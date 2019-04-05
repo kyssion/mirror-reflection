@@ -1,6 +1,6 @@
 package org.prims.reflection.wrapper;
 
-import org.prims.reflection.meta.MetaObject;
+import org.prims.reflection.meta.MirrorObject;
 import org.prims.reflection.object.ObjectFactory;
 import org.prims.reflection.property.PropertyTokenizer;
 
@@ -13,7 +13,7 @@ public class CollectionWrapper implements ObjectWrapper {
 
     private final Collection<Object> object;
 
-    public CollectionWrapper(MetaObject metaObject, Collection<Object> object) {
+    public CollectionWrapper(MirrorObject mirrorObject, Collection<Object> object) {
         this.object = object;
         this.type=object.getClass();
     }
@@ -69,7 +69,7 @@ public class CollectionWrapper implements ObjectWrapper {
     }
 
     @Override
-    public MetaObject instantiatePropertyValue(String name, PropertyTokenizer prop, ObjectFactory objectFactory) {
+    public MirrorObject instantiatePropertyValue(String name, PropertyTokenizer prop, ObjectFactory objectFactory) {
         throw new UnsupportedOperationException();
     }
 

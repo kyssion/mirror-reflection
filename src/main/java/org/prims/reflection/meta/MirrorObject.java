@@ -13,9 +13,9 @@ import java.util.Map;
 
 /**
  * 本质上是针对O表决传统Wrapper的一层封装,额外提供了字符串名称解析的能力
- * metaObject的设计和ObjectWrapper的设计有鞋别扭, metaObject提供的了数据的迭代功能,ObjectWrapper提供了数据获取功能,二者暂时无法拆分
+ * mirrorObject的设计和ObjectWrapper的设计有鞋别扭, mirrorObject提供的了数据的迭代功能,ObjectWrapper提供了数据获取功能,二者暂时无法拆分
  */
-public class MetaObject {
+public class MirrorObject {
 
     private final Object originalObject;
     private final ObjectWrapper objectWrapper;
@@ -24,8 +24,8 @@ public class MetaObject {
     private final ReflectorFactory reflectorFactory;
 
     @SuppressWarnings("unchecked")
-    private MetaObject(Object object, ObjectFactory objectFactory,
-                       ObjectWrapperFactory objectWrapperFactory, ReflectorFactory reflectorFactory) {
+    private MirrorObject(Object object, ObjectFactory objectFactory,
+                         ObjectWrapperFactory objectWrapperFactory, ReflectorFactory reflectorFactory) {
 
         this.originalObject = object;
         this.objectFactory = objectFactory;
@@ -49,17 +49,17 @@ public class MetaObject {
         return this.objectWrapper.getType();
     }
 
-    public static MetaObject forObject(Object object) {
+    public static MirrorObject forObject(Object object) {
         return forObject(object, new DefaultObjectFactory(), new DefaultObjectWrapperFactory(), new DefaultReflectorFactory());
     }
 
-    public static MetaObject forObject(Object object, ObjectFactory objectFactory,
-                                       ObjectWrapperFactory objectWrapperFactory,
-                                       ReflectorFactory reflectorFactory) {
+    public static MirrorObject forObject(Object object, ObjectFactory objectFactory,
+                                         ObjectWrapperFactory objectWrapperFactory,
+                                         ReflectorFactory reflectorFactory) {
         if (object == null) {
             return SystemMetaObject.NULL_META_OBJECT;
         } else {
-            return new MetaObject(object, objectFactory, objectWrapperFactory, reflectorFactory);
+            return new MirrorObject(object, objectFactory, objectWrapperFactory, reflectorFactory);
         }
     }
 
@@ -115,7 +115,7 @@ public class MetaObject {
     public Object getValue(String name) {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
-            MetaObject metaValue = metaObjectForProperty(prop.getIndexedName());
+            MirrorObject metaValue = mirrorObjectForProperty(prop.getIndexedName());
             if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
                 return null;
             } else {
@@ -129,7 +129,7 @@ public class MetaObject {
     public void setValue(String name, Object value) {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
-            MetaObject metaValue = metaObjectForProperty(prop.getIndexedName());
+            MirrorObject metaValue = mirrorObjectForProperty(prop.getIndexedName());
             if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
                 if (value == null) {
                     // don't instantiate child path if value is null
@@ -151,7 +151,7 @@ public class MetaObject {
     public Object invoke(String name,Object...params){
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
-            MetaObject metaValue = metaObjectForProperty(prop.getIndexedName());
+            MirrorObject metaValue = mirrorObjectForProperty(prop.getIndexedName());
             if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
                 return null;
             } else {
@@ -162,9 +162,9 @@ public class MetaObject {
         }
     }
 
-    public MetaObject metaObjectForProperty(String name) {
+    public MirrorObject mirrorObjectForProperty(String name) {
         Object value = getValue(name);
-        return MetaObject.forObject(value, objectFactory, objectWrapperFactory, reflectorFactory);
+        return MirrorObject.forObject(value, objectFactory, objectWrapperFactory, reflectorFactory);
     }
 
     public ObjectWrapper getObjectWrapper() {

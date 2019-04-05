@@ -1,7 +1,7 @@
 package test;
 
 
-import org.prims.reflection.meta.MetaObject;
+import org.prims.reflection.meta.MirrorObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,12 +15,12 @@ public class RouterTest {
         test.setSupper(base);
         TestTTT testTTT = new TestTTT();
         testTTT.setTest(test);
-        MetaObject metaObject = MetaObject.forObject(testTTT);
-        String[] name = metaObject.getGetterNames();
+        MirrorObject mirrorObject = MirrorObject.forObject(testTTT);
+        String[] name = mirrorObject.getGetterNames();
         for (String string : name) {
             System.out.println(string);
         }
-        Number number = metaObject.getValue("test.supper.number", Number.class);
+        Number number = mirrorObject.getValue("test.supper.number", Number.class);
         System.out.println(number);
         Object one = new String("123");
         Object two = new String("333");

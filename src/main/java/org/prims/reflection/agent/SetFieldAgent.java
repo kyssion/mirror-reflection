@@ -1,25 +1,24 @@
-package org.prims.reflection.invoker;
+package org.prims.reflection.agent;
 
 import org.prims.reflection.Reflector;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
-public class GetFieldInvoker implements Invoker {
+public class SetFieldAgent implements Agent {
     private final Field field;
     private final Class<?> returnType;
     private final Class<?> type;
     private final Class<?>[] paramType;
     private final Annotation[] annotations;
 
-    public GetFieldInvoker(Field field) {
+    public SetFieldAgent(Field field) {
         this.field = field;
         this.type = field.getType();
         this.paramType = new Class[]{type};
         this.returnType = type;
-        this.annotations= field.getAnnotations();
+        this.annotations = field.getAnnotations();
     }
-
     /**
      * 针对java9+ 对反射的控制,使用canControlMemberAccessible进行反射能力的检查和校验
      * @param target
@@ -30,15 +29,16 @@ public class GetFieldInvoker implements Invoker {
     @Override
     public Object invoke(Object target, Object[] args) throws IllegalAccessException {
         try {
-            return field.get(target);
+            field.set(target, args[0]);
         } catch (IllegalAccessException e) {
             if (Reflector.canControlMemberAccessible()) {
                 field.setAccessible(true);
-                return field.get(target);
+                field.set(target, args[0]);
             } else {
                 throw e;
             }
         }
+        return null;
     }
 
     @Override
@@ -61,3 +61,4 @@ public class GetFieldInvoker implements Invoker {
         return this.annotations;
     }
 }
+

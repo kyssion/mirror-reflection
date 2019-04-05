@@ -1,7 +1,7 @@
 package org.prims.reflection.wrapper;
 
 
-import org.prims.reflection.meta.MetaObject;
+import org.prims.reflection.meta.MirrorObject;
 import org.prims.reflection.meta.SystemMetaObject;
 import org.prims.reflection.object.ObjectFactory;
 import org.prims.reflection.property.PropertyTokenizer;
@@ -16,8 +16,8 @@ public class MapWrapper extends BaseWrapper {
 
     private final Class<?> type;
 
-    public MapWrapper(MetaObject metaObject, Map<String, Object> map) {
-        super(metaObject);
+    public MapWrapper(MirrorObject mirrorObject, Map<String, Object> map) {
+        super(mirrorObject);
         this.map = map;
         this.type= map.getClass();
     }
@@ -66,7 +66,7 @@ public class MapWrapper extends BaseWrapper {
     public Class<?> getSetterType(String name) {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
-            MetaObject metaValue = metaObject.metaObjectForProperty(prop.getIndexedName());
+            MirrorObject metaValue = mirrorObject.mirrorObjectForProperty(prop.getIndexedName());
             if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
                 return Object.class;
             } else {
@@ -85,7 +85,7 @@ public class MapWrapper extends BaseWrapper {
     public Class<?> getGetterType(String name) {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
-            MetaObject metaValue = metaObject.metaObjectForProperty(prop.getIndexedName());
+            MirrorObject metaValue = mirrorObject.mirrorObjectForProperty(prop.getIndexedName());
             if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
                 return Object.class;
             } else {
@@ -110,7 +110,7 @@ public class MapWrapper extends BaseWrapper {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
             if (map.containsKey(prop.getIndexedName())) {
-                MetaObject metaValue = metaObject.metaObjectForProperty(prop.getIndexedName());
+                MirrorObject metaValue = mirrorObject.mirrorObjectForProperty(prop.getIndexedName());
                 if (metaValue == SystemMetaObject.NULL_META_OBJECT) {
                     return true;
                 } else {
@@ -125,10 +125,10 @@ public class MapWrapper extends BaseWrapper {
     }
 
     @Override
-    public MetaObject instantiatePropertyValue(String name, PropertyTokenizer prop, ObjectFactory objectFactory) {
+    public MirrorObject instantiatePropertyValue(String name, PropertyTokenizer prop, ObjectFactory objectFactory) {
         HashMap<String, Object> map = new HashMap<>();
         set(prop, map);
-        return MetaObject.forObject(map, metaObject.getObjectFactory(), metaObject.getObjectWrapperFactory(), metaObject.getReflectorFactory());
+        return MirrorObject.forObject(map, mirrorObject.getObjectFactory(), mirrorObject.getObjectWrapperFactory(), mirrorObject.getReflectorFactory());
     }
 
     @Override

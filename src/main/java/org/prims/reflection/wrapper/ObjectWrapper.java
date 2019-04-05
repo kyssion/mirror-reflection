@@ -1,6 +1,6 @@
 package org.prims.reflection.wrapper;
 
-import org.prims.reflection.meta.MetaObject;
+import org.prims.reflection.meta.MirrorObject;
 import org.prims.reflection.object.ObjectFactory;
 import org.prims.reflection.property.PropertyTokenizer;
 
@@ -31,7 +31,7 @@ public interface ObjectWrapper {
 
     boolean hasGetter(String name);
 
-    MetaObject instantiatePropertyValue(String name, PropertyTokenizer prop, ObjectFactory objectFactory);
+    MirrorObject instantiatePropertyValue(String name, PropertyTokenizer prop, ObjectFactory objectFactory);
 
     boolean isCollection();
 

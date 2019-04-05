@@ -1,7 +1,7 @@
 package org.prims.reflection.wrapper;
 
 import org.prims.reflection.exception.ReflectionException;
-import org.prims.reflection.meta.MetaObject;
+import org.prims.reflection.meta.MirrorObject;
 
 public class DefaultObjectWrapperFactory implements ObjectWrapperFactory {
 
@@ -11,7 +11,7 @@ public class DefaultObjectWrapperFactory implements ObjectWrapperFactory {
     }
 
     @Override
-    public ObjectWrapper getWrapperFor(MetaObject metaObject, Object object) {
+    public ObjectWrapper getWrapperFor(MirrorObject mirrorObject, Object object) {
         throw new ReflectionException("The DefaultObjectWrapperFactory should never be called to provide an ObjectWrapper.");
     }
 }
