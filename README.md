@@ -1,5 +1,8 @@
 # MIRROR-REFLECTION
 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![](https://img.shields.io/badge/openjdk-1.8%2B-green.svg)]() ![](https://img.shields.io/badge/release-1.0--GA-brightgreen.svg) ![](https://img.shields.io/badge/coverage-95%25-yellowgreen.svg)
+
 mirror-reflection 是一个高性能的java反射类库的一个封装,旨在降低java反射相关操作的难度,提供更好的编程体验.
 
 ## mirror-reflection解决的主要问题
