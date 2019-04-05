@@ -45,7 +45,7 @@ public class MirrorObject {
         }
     }
 
-    public Class<?> getType(){
+    public Class<?> getType() {
         return this.objectWrapper.getType();
     }
 
@@ -108,7 +108,7 @@ public class MirrorObject {
     }
 
     @SuppressWarnings("unchecked")
-    public <T> T getValue(String name,Class<T> item){
+    public <T> T getValue(String name, Class<T> item) {
         return (T) getValue(name);
     }
 
@@ -145,20 +145,25 @@ public class MirrorObject {
     }
 
     @SuppressWarnings("unchecked")
-    public <T> T invoke(String name,Class<T> item,Object...params){
-        return (T)invoke(name,params);
+    public <T> T invoke(String name, Class<T> item, Object... params) {
+        if (item == null) {
+            invoke(name, params);
+            return null;
+        }
+        return (T) invoke(name, params);
     }
-    public Object invoke(String name,Object...params){
+
+    public Object invoke(String name, Object... params) {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if (prop.hasNext()) {
             MirrorObject metaValue = mirrorObjectForProperty(prop.getIndexedName());
             if (metaValue == SystemMirrorObject.NULL_META_OBJECT) {
                 return null;
             } else {
-                return metaValue.invoke(prop.getChildren(),params);
+                return metaValue.invoke(prop.getChildren(), params);
             }
         } else {
-            return objectWrapper.invoke(name,params);
+            return objectWrapper.invoke(name, params);
         }
     }
 

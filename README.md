@@ -42,6 +42,8 @@ getMethod|methodName:string|获取对应名称的方法列表(java支持函数�
 
 针对reflect的一层封转简化创建过程,并提供缓存功能
 
+> 主要方法
+
 方法名称|参数|作用
 ---|---|---
 findForClass|type:class|获取class对应的reflector类
@@ -65,5 +67,30 @@ findForClass|type:class|获取class对应的reflector类
     - mirror框架的即系原则和上面类似,总结一下就是可以拿到对应路径的下的变量反射或者函数反射
 
 -----
+
+> 主要方法
+
+ps: 相比较reflector支持路径解析
+
+方法名称|参数|作用
+---|---|---
+getGetAgent|propertyName:string|获取对应名称的field get agent(相当于get方法)
+getSetAgent|propertyName:string|获取对应名称的field set agent(相当于set方法)
+getGetterType|propertyName:string|获取对应名称的field get方法返回值class类型
+getSetterType|propertyName:string|获取对应名称的field set方法返回值class类型
+getMethod|methodName:string|获取对应名称的方法列表(java支持函数重载,所以返回值是列表)
+
+### 3. mirrorObject
+
+一个object对象的代理通过这个方法可以更加方便的使用反射+路径解析的方式操作这个object对象
+
+主要方法
+
+
+方法名称|参数|作用
+---|---|---
+getValue|name:string,item:class|获取名称微string类型为item类型的值
+setValue|name:string,value:object|为名称微name的对象赋value值
+invoke|name:string,item:class,params:Object[]|运行名称为name,返回值为item(可以为null),参数为params的方法
 
 

@@ -175,7 +175,7 @@ public class BeanWrapper extends BaseWrapper {
 
     private Object getBeanProperty(PropertyTokenizer prop, Object object) {
         try {
-            Agent method = mirrorClass.getGetInvoker(prop.getName());
+            Agent method = mirrorClass.getGetAgent(prop.getName());
             try {
                 return method.invoke(object, NO_ARGUMENTS);
             } catch (Throwable t) {
@@ -190,7 +190,7 @@ public class BeanWrapper extends BaseWrapper {
 
     private void setBeanProperty(PropertyTokenizer prop, Object object, Object value) {
         try {
-            Agent method = mirrorClass.getSetInvoker(prop.getName());
+            Agent method = mirrorClass.getSetAgent(prop.getName());
             Object[] params = {value};
             try {
                 method.invoke(object, params);

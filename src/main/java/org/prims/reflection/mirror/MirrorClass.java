@@ -162,17 +162,43 @@ public class MirrorClass {
         }
     }
 
-    public Agent getMethod(String name, Class<?>[] paramType) {
-        List<Agent> allMethod = reflector.getMethod(name);
-        for (Agent agent : allMethod) {
-            if (isInMethod(agent, paramType)) {
-                return agent;
-            }
+    public Agent getGetAgent(String name) {
+        PropertyTokenizer prop = new PropertyTokenizer(name);
+        if(prop.hasNext()){
+            MirrorClass mirrorProp = metaClassForProperty(prop);
+            return mirrorProp.getGetAgent(prop.getChildren());
+        }else {
+            return reflector.getGetAgent(name);
         }
-        throw new ReflectionException("There is no method for method named '" + name + "'");
     }
 
-    public boolean isInMethod(Agent invokers, Class<?>[] paramType) {
+    public Agent getSetAgent(String name) {
+        PropertyTokenizer prop = new PropertyTokenizer(name);
+        if(prop.hasNext()){
+            MirrorClass mirrorProp = metaClassForProperty(prop);
+            return mirrorProp.getSetAgent(prop.getChildren());
+        }else {
+            return reflector.getSetAgent(name);
+        }
+    }
+
+    public Agent getMethod(String name, Class<?>[] paramType) {
+        PropertyTokenizer prop = new PropertyTokenizer(name);
+        if(prop.hasNext()){
+            MirrorClass mirrorProp = metaClassForProperty(prop);
+            return mirrorProp.getSetAgent(prop.getChildren());
+        }else {
+            List<Agent> allMethod = reflector.getMethod(name);
+            for (Agent agent : allMethod) {
+                if (isInMethod(agent, paramType)) {
+                    return agent;
+                }
+            }
+            throw new ReflectionException("There is no method for method named '" + name + "'");
+        }
+    }
+
+    private boolean isInMethod(Agent invokers, Class<?>[] paramType) {
         Class<?>[] params = invokers.getParamType();
         if (params.length != paramType.length) {
             return false;
@@ -188,14 +214,6 @@ public class MirrorClass {
             newTypes[index] = TypeEnum.getType(types[index]);
         }
         return newTypes;
-    }
-
-    public Agent getGetInvoker(String name) {
-        return reflector.getGetAgent(name);
-    }
-
-    public Agent getSetInvoker(String name) {
-        return reflector.getGetAgent(name);
     }
 
     private StringBuilder buildProperty(String name, StringBuilder builder) {
