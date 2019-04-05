@@ -22,11 +22,13 @@ mirror-reflection 是一个高性能的java反射类库的一个封装,旨在降
 
 ### 1. reflector和reflectorFactory类
 
+> reflector类
+
 针对java class的一层封装,提供java类的field和method缓存功能
 
 引申:Agent接口-> mirror为了简化操作,将method操作和field操作都简化成一个agent,当需要运行或者取值的时候只需要运行接口的invoke方法即可(相当于针对java反射操作的一层封装)
 
-主要方法
+> 主要方法
 
 方法名称|参数|作用
 ---|---|---
@@ -36,7 +38,9 @@ getGetterType|propertyName:string|获取对应名称的field get方法返回值c
 getSetterType|propertyName:string|获取对应名称的field set方法返回值class类型
 getMethod|methodName:string|获取对应名称的方法列表(java支持函数重载,所以返回值是列表)
 
-reflectorFacotry类: 针对reflect的一层封转简化创建过程,并提供缓存功能
+> reflectorFacotry类
+
+针对reflect的一层封转简化创建过程,并提供缓存功能
 
 方法名称|参数|作用
 ---|---|---
