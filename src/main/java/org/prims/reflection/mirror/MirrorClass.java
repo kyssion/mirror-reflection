@@ -117,7 +117,7 @@ public class MirrorClass {
 
     private Type getGenericGetterType(String propertyName) {
         try {
-            Agent agent = reflector.getGetInvoker(propertyName);
+            Agent agent = reflector.getGetAgent(propertyName);
             if (agent instanceof MethodAgent) {
                 Field _method = MethodAgent.class.getDeclaredField("method");
                 _method.setAccessible(true);
@@ -191,11 +191,11 @@ public class MirrorClass {
     }
 
     public Agent getGetInvoker(String name) {
-        return reflector.getGetInvoker(name);
+        return reflector.getGetAgent(name);
     }
 
     public Agent getSetInvoker(String name) {
-        return reflector.getSetInvoker(name);
+        return reflector.getGetAgent(name);
     }
 
     private StringBuilder buildProperty(String name, StringBuilder builder) {

@@ -488,7 +488,7 @@ public class Reflector {
      * @param propertyName
      * @return
      */
-    public Agent getSetInvoker(String propertyName) {
+    public Agent getSetAgent(String propertyName) {
         Agent method = setMethods.get(propertyName);
         if (method == null) {
             throw new ReflectionException("There is no setter for property named '" + propertyName + "' in '" + type + "'");
@@ -502,7 +502,7 @@ public class Reflector {
      * @param propertyName
      * @return
      */
-    public Agent getGetInvoker(String propertyName) {
+    public Agent getGetAgent(String propertyName) {
         Agent method = getMethods.get(propertyName);
         if (method == null) {
             throw new ReflectionException("There is no getter for property named '" + propertyName + "' in '" + type + "'");
