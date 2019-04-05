@@ -20,4 +20,46 @@ mirror-reflection 是一个高性能的java反射类库的一个封装,旨在降
 
 ## mirror使用方法
 
-1. 
+### 1. reflector和reflectorFactory类
+
+针对java class的一层封装,提供java类的field和method缓存功能
+
+引申:Agent接口-> mirror为了简化操作,将method操作和field操作都简化成一个agent,当需要运行或者取值的时候只需要运行接口的invoke方法即可(相当于针对java反射操作的一层封装)
+
+主要方法
+
+方法名称|参数|作用
+---|---|---
+getGetAgent|propertyName:string|获取对应名称的field get agent(相当于get方法)
+getSetAgent|propertyName:string|获取对应名称的field set agent(相当于set方法)
+getGetterType|propertyName:string|获取对应名称的field get方法返回值class类型
+getSetterType|propertyName:string|获取对应名称的field set方法返回值class类型
+getMethod|methodName:string|获取对应名称的方法列表(java支持函数重载,所以返回值是列表)
+
+reflectorFacotry类: 针对reflect的一层封转简化创建过程,并提供缓存功能
+
+方法名称|参数|作用
+---|---|---
+findForClass|type:class|获取class对应的reflector类
+
+### 2. mirrorClass
+
+这个方法是针对reflector的一层封装,支持路径解析方法获取field或者method的反射
+
+-----
+
+引申:mirror的路径解析原则
+
+基本语法 
+
+- 非数组或列表或者map的情况 
+  - 语句:xxx.yyy.zzz(以下的解释只是方便理解,实际上并不是采用这种操作)
+    - 当要解析的是变量信息时 mirror框架拿到getXxx().getYyy().getZzz()对应的参数反射
+    - 当要解析的是方法时 mirror框架将会拿到getXxx().getYyy().zzz()的method反射
+- 数组或列表或者map的情况
+  - 语句xxx.yyy[ppp].zzz
+    - mirror框架的即系原则和上面类似,总结一下就是可以拿到对应路径的下的变量反射或者函数反射
+
+-----
+
+
