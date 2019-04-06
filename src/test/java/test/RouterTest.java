@@ -20,7 +20,6 @@ public class RouterTest {
         for (String string : name) {
             System.out.println(string);
         }
-
         Number number = mirrorObject.getValue("test.supper.number", Number.class);
         System.out.println(number);
         Object one = new String("123");
