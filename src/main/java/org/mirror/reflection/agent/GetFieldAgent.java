@@ -28,7 +28,7 @@ public class GetFieldAgent implements Agent {
      * @throws IllegalAccessException
      */
     @Override
-    public Object invoke(Object target, Object[] args) throws IllegalAccessException {
+    public Object invoke(Object target, Object...args) throws IllegalAccessException {
         try {
             return field.get(target);
         } catch (IllegalAccessException e) {

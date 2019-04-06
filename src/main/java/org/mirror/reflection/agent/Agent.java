@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public interface Agent {
 
-    Object invoke(Object target, Object[] args) throws IllegalAccessException, InvocationTargetException;
+    Object invoke(Object target, Object...args) throws IllegalAccessException, InvocationTargetException;
 
     Class<?> getType();
 

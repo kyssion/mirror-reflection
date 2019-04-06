@@ -27,9 +27,33 @@ mirror-reflection 是一个高性能的java反射类库的一个封装,旨在降
 
 在一个release中下载对应版本的jar包,然后导入到项目的classpath目录即可
 
-2. maven
+2. 使用maven仓库 或者 gradle
 
-**抱歉值仓库正在申请**
+ps: 正在申请域名准备发布到公链上,目前只提供了本地打包的功能
+
+在项目根目录中运行如下命令
+
+```groovy
+gradle publishToMavenLocal
+```
+
+即可打包到本地仓库,如果需要暂时请自行的添加到私有仓库中
+
+maven地址:
+
+```xml
+<dependency>
+    <groupId>org.mirror</groupId>
+    <artifactId>mirror-reflection</artifactId>
+    <version>xxx</version>
+</dependency>
+```
+
+gradle地址
+
+```groovy
+implementation 'org.mirror:mirror-reflection:1.0-SNAPSHOT'
+```
 
 ## mirror-refllection 使用方法
 
@@ -51,6 +75,32 @@ getGetterType|propertyName:string|获取对应名称的field get方法返回值c
 getSetterType|propertyName:string|获取对应名称的field set方法返回值class类型
 getMethod|methodName:string|获取对应名称的方法列表(java支持函数重载,所以返回值是列表)
 
+> 例子:(具体信息请查看test目录下的代码,这是只记录调用方法)
+
+```java
+People one = new People();
+one.setAge(12);
+one.setName("one");
+one.setOtherPeopleThingk("bad one");
+
+People two = new People();
+one.setAge(13);
+one.setName("two");
+one.setOtherPeopleThingk("goods one");
+
+GoodsPeople goodsPeople = new GoodsPeople();
+goodsPeople.setContury(ConEnum.CHINA);
+goodsPeople.setHelpPeopleNumber(1000);
+goodsPeople.setMoney(123432.22);
+goodsPeople.setFrinds(new People[]{one, two});
+
+Reflector reflector = new Reflector(goodsPeople.getClass());
+Agent agent = reflector.getGetAgent("money");
+Agent agent1 = reflector.getMethod("whatDoYouThink").get(0);
+System.out.println(agent.invoke(goodsPeople, null));
+System.out.println(agent1.invoke(goodsPeople, one));
+```
+
 > reflectorFacotry类
 
 针对reflect的一层封转简化创建过程,并提供缓存功能
@@ -60,6 +110,16 @@ getMethod|methodName:string|获取对应名称的方法列表(java支持函数�
 方法名称|参数|作用
 ---|---|---
 findForClass|type:class|获取class对应的reflector类
+
+> 例子 :
+
+```java
+Agent agent = reflector1.getGetAgent("money");
+Agent agent1 = reflector.getMethod("whatDoYouThink").get(0);
+System.out.println(agent.invoke(goodsPeople, null));
+System.out.println(agent1.invoke(goodsPeople, one));
+```
+
 
 ### 2. mirrorClass
 
@@ -79,6 +139,8 @@ findForClass|type:class|获取class对应的reflector类
   - 语句xxx.yyy[ppp].zzz
     - mirror框架的即系原则和上面类似,总结一下就是可以拿到对应路径的下的变量反射或者函数反射
 
+注意 mirrorclass的路径解析其实是有局限性的,表现在xxx.yyy[ppp].zzz这种情况下,其实是获取不到集合数组对应的反射的,原因是因为这种情况下即使拿到了,也无法使用java自身的反射机制,成功调用
+其次是java的泛型使用的是类型擦除模式,即使是拿到了也是object类型,无法进行反射,所以在这里针对集合类不提供这种功能
 -----
 
 > 主要方法
@@ -93,18 +155,31 @@ getGetterType|propertyName:string|获取对应名称的field get方法返回值c
 getSetterType|propertyName:string|获取对应名称的field set方法返回值class类型
 getMethod|methodName:string|获取对应名称的方法列表(java支持函数重载,所以返回值是列表)
 
+> 例子
+
+```java
+MirrorClass mirrorClass = MirrorClass.forClass(GoodsPeople.class);
+System.out.println(mirrorClass.getGetAgent("frinds"));
+```
+
 ### 3. mirrorObject
 
 一个object对象的代理通过这个方法可以更加方便的使用反射+路径解析的方式操作这个object对象
 
 主要方法
 
-
 方法名称|参数|作用
 ---|---|---
 getValue|name:string,item:class|获取名称微string类型为item类型的值
 setValue|name:string,value:object|为名称微name的对象赋value值
 invoke|name:string,item:class,params:Object[]|运行名称为name,返回值为item(可以为null),参数为params的方法
+
+```java
+MirrorObject mirrorObject = MirrorObject.forObject(goodsPeople);
+mirrorObject.setValue("frinds[0].name","change");
+System.out.println(mirrorObject.getValue("frinds[0].name",String.class));
+mirrorObject.invoke("frinds[0].doSay");
+```
 
 ## 开源协议和授权
 

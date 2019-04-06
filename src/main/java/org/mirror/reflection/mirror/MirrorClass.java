@@ -1,5 +1,6 @@
 package org.mirror.reflection.mirror;
 
+import org.mirror.reflection.DefaultReflectorFactory;
 import org.mirror.reflection.Reflector;
 import org.mirror.reflection.ReflectorFactory;
 import org.mirror.reflection.agent.Agent;
@@ -35,6 +36,10 @@ public class MirrorClass {
     public static MirrorClass forClass(Class<?> type, ReflectorFactory reflectorFactory) {
         return new MirrorClass(type, reflectorFactory);
     }
+    public static MirrorClass forClass(Class<?> type) {
+        return new MirrorClass(type, new DefaultReflectorFactory());
+    }
+
 
 
     //通过名称获取本身的一个field的MetaClass
@@ -186,7 +191,7 @@ public class MirrorClass {
         PropertyTokenizer prop = new PropertyTokenizer(name);
         if(prop.hasNext()){
             MirrorClass mirrorProp = metaClassForProperty(prop);
-            return mirrorProp.getSetAgent(prop.getChildren());
+            return mirrorProp.getMethod(prop.getChildren(),paramType);
         }else {
             List<Agent> allMethod = reflector.getMethod(name);
             for (Agent agent : allMethod) {
@@ -199,6 +204,7 @@ public class MirrorClass {
     }
 
     private boolean isInMethod(Agent invokers, Class<?>[] paramType) {
+
         Class<?>[] params = invokers.getParamType();
         if (params.length != paramType.length) {
             return false;
@@ -227,7 +233,7 @@ public class MirrorClass {
                 metaProp.buildProperty(prop.getChildren(), builder);
             }
         } else {
-            String propertyName = reflector.findPropertyName(name);
+            String propertyName = reflector.findPropertyName(prop.getName());
             if (propertyName != null) {
                 builder.append(propertyName);
             }

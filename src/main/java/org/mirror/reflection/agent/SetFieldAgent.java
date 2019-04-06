@@ -27,7 +27,7 @@ public class SetFieldAgent implements Agent {
      * @throws IllegalAccessException
      */
     @Override
-    public Object invoke(Object target, Object[] args) throws IllegalAccessException {
+    public Object invoke(Object target, Object...args) throws IllegalAccessException {
         try {
             field.set(target, args[0]);
         } catch (IllegalAccessException e) {

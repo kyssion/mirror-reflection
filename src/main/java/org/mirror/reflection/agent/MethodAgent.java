@@ -33,7 +33,7 @@ public class MethodAgent implements Agent {
      * @throws IllegalAccessException
      */
     @Override
-    public Object invoke(Object target, Object[] args) throws IllegalAccessException, InvocationTargetException {
+    public Object invoke(Object target, Object...args) throws IllegalAccessException, InvocationTargetException {
         try {
             return method.invoke(target, args);
         } catch (IllegalAccessException e) {
