@@ -5,7 +5,6 @@ import org.mirror.reflection.object.ObjectFactory;
 import org.mirror.reflection.DefaultReflectorFactory;
 import org.mirror.reflection.ReflectorFactory;
 import org.mirror.reflection.property.PropertyTokenizer;
-import com.kyssion.mirror.reflection.wrapper.*;
 import org.mirror.reflection.wrapper.*;
 
 import java.util.Collection;

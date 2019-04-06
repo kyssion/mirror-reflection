@@ -1,12 +1,25 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
-apply plugin: "maven-publish"
 group 'org.mirror'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 11
 
 repositories {
+    jcenter()
     mavenCentral()
+}
+
+//利用publishing启动项目打包
+publishing {
+    //发布内容
+    publications {
+        //自命名"myPublish"为一个发布任务
+        myPublish(MavenPublication) {
+            //jar来源
+            from components.java
+        }
+    }
 }
