@@ -21,6 +21,16 @@ mirror-reflection 是一个高性能的java反射类库的一个封装,旨在降
 - 其他依赖
   - 无第三方依赖
 
+## mirror-relection 导入方法
+
+1. 直接使用jar导入
+
+在一个release中下载对应版本的jar包,然后导入到项目的classpath目录即可
+
+2. maven
+
+**抱歉值仓库正在申请**
+
 ## mirror-refllection 使用方法
 
 ### 1. reflector和reflectorFactory类
