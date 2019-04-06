@@ -1,7 +1,7 @@
 package test;
 
 
-import org.prims.reflection.mirror.MirrorObject;
+import com.kyssion.mirror.reflection.mirror.MirrorObject;
 
 public class ReflectorMethodTest {
     public static void main(String[] args) {
