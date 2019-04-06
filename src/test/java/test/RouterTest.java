@@ -1,7 +1,7 @@
 package test;
 
 
-import com.kyssion.mirror.reflection.mirror.MirrorObject;
+import org.mirror.reflection.mirror.MirrorObject;
 
 import java.util.HashMap;
 import java.util.Map;
