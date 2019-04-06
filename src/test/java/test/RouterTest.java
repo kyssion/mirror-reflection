@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RouterTest {
+
     public static void main(String[] args) {
         Supper base = new Supper();
         base.setIsup(false);
