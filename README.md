@@ -23,11 +23,11 @@ mirror-reflection 是一个高性能的java反射类库的一个封装,旨在降
 
 ## mirror-relection 导入方法
 
-1. 直接使用jar导入
+> 1. 直接使用jar导入
 
 在一个release中下载对应版本的jar包,然后导入到项目的classpath目录即可
 
-2. 使用maven仓库 或者 gradle
+> 2. 使用maven仓库 或者 gradle
 
 ps: 正在申请域名准备发布到公链上,目前只提供了本地打包的功能
 
@@ -39,7 +39,7 @@ gradle publishToMavenLocal
 
 即可打包到本地仓库,如果需要暂时请自行的添加到私有仓库中
 
-maven地址:
+> maven地址:
 
 ```xml
 <dependency>
@@ -49,7 +49,7 @@ maven地址:
 </dependency>
 ```
 
-gradle地址
+> gradle地址
 
 ```groovy
 implementation 'org.mirror:mirror-reflection:1.0-SNAPSHOT'
@@ -127,7 +127,7 @@ System.out.println(agent1.invoke(goodsPeople, one));
 
 -----
 
-引申:mirror的路径解析原则
+> 引申:mirror的路径解析原则
 
 基本语法 
 
@@ -145,7 +145,7 @@ System.out.println(agent1.invoke(goodsPeople, one));
 
 > 主要方法
 
-ps: 相比较reflector支持路径解析
+> ps: 相比较reflector支持路径解析
 
 方法名称|参数|作用
 ---|---|---
@@ -166,7 +166,7 @@ System.out.println(mirrorClass.getGetAgent("frinds"));
 
 一个object对象的代理通过这个方法可以更加方便的使用反射+路径解析的方式操作这个object对象
 
-主要方法
+> 主要方法
 
 方法名称|参数|作用
 ---|---|---
