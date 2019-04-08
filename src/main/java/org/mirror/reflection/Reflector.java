@@ -532,40 +532,20 @@ public class Reflector {
         return clazz;
     }
 
-    /**
-     * Gets an array of the readable properties for an object
-     *
-     * @return The array
-     */
     public String[] getGetablePropertyNames() {
         return readablePropertyNames;
     }
 
-    /**
-     * Gets an array of the writable properties for an object
-     *
-     * @return The array
-     */
+
     public String[] getSetablePropertyNames() {
         return writeablePropertyNames;
     }
 
-    /**
-     * Check to see if a class has a writable property by name
-     *
-     * @param propertyName - the name of the property to check
-     * @return True if the object has a writable property by the name
-     */
     public boolean hasSetter(String propertyName) {
         return setMethods.keySet().contains(propertyName);
     }
 
-    /**
-     * Check to see if a class has a readable property by name
-     *
-     * @param propertyName - the name of the property to check
-     * @return True if the object has a readable property by the name
-     */
+
     public boolean hasGetter(String propertyName) {
         return getMethods.keySet().contains(propertyName);
     }

@@ -6,9 +6,6 @@ import org.mirror.reflection.property.PropertyTokenizer;
 
 import java.util.List;
 
-/**
- * @author Clinton Begin
- */
 public interface ObjectWrapper {
 
     Class<?> getType();
