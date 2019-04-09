@@ -9,6 +9,7 @@ import org.mirror.reflection.agent.SetFieldAgent;
 import org.mirror.reflection.property.PropertyNamer;
 import org.mirror.reflection.property.TypeParameterResolver;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.Map.Entry;
@@ -19,6 +20,7 @@ import java.util.Map.Entry;
 public class Reflector {
 
     private final Class<?> type;
+    private final Map<Annotation,Annotation> annotations=new HashMap<>();
     private final String[] readablePropertyNames;
     private final String[] writeablePropertyNames;
     private final Map<String, List<Agent>> allMethod = new HashMap<>();
@@ -33,6 +35,7 @@ public class Reflector {
     public Reflector(Class<?> clazz) {
         type = clazz;
         //添加这个class的0参数构造方法
+        addAnnotation(clazz);
         addDefaultConstructor(clazz);
         addGetMethods(clazz);
         addSetMethods(clazz);
@@ -50,6 +53,19 @@ public class Reflector {
             caseInsensitivePropertyMap.put(propName.toUpperCase(Locale.ENGLISH), propName);
         }
     }
+
+    public Annotation getAnnotation(Annotation annotation) {
+        return annotations.get(annotation);
+    }
+
+    private void addAnnotation(Class<?> clazz) {
+        Map<Annotation,Annotation> map = new HashMap<>();
+        Annotation[] annotations = clazz.getAnnotations();
+        for(Annotation ann: annotations){
+            this.annotations.put(ann,ann);
+        }
+    }
+
 
     /**
      * 初始化这个class的0 参数构造方法

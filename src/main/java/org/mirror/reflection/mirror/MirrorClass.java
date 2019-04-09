@@ -11,6 +11,7 @@ import org.mirror.reflection.property.TypeParameterResolver;
 import org.mirror.reflection.util.TypeEnum;
 import org.mirror.reflection.exception.ReflectionException;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -40,7 +41,9 @@ public class MirrorClass {
         return new MirrorClass(type, new DefaultReflectorFactory());
     }
 
-
+    public Annotation getAnnotation(Annotation annotation){
+        return this.reflector.getAnnotation(annotation);
+    }
 
     //通过名称获取本身的一个field的MetaClass
     public MirrorClass metaClassForProperty(String name) {
