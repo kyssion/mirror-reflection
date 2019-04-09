@@ -10,12 +10,14 @@ public class TypeParameterResolver {
 
     public static Type resolveFieldType(Field field, Type srcType) {
         Type fieldType = field.getGenericType();
+        //返回这个field包裹对象是谁
         Class<?> declaringClass = field.getDeclaringClass();
         return resolveType(fieldType, srcType, declaringClass);
     }
 
     public static Type resolveReturnType(Method method, Type srcType) {
         Type returnType = method.getGenericReturnType();
+        //返回这个方法对应的声明对对对象
         Class<?> declaringClass = method.getDeclaringClass();
         return resolveType(returnType, srcType, declaringClass);
     }
