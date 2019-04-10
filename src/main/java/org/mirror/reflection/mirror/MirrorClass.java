@@ -206,14 +206,8 @@ public class MirrorClass {
         }
     }
 
-    public List<Agent> getAllMethod(String name) {
-        PropertyTokenizer prop = new PropertyTokenizer(name);
-        if(prop.hasNext()){
-            MirrorClass mirrorProp = metaClassForProperty(prop);
-            return mirrorProp.getAllMethod(prop.getChildren());
-        }else {
-            return reflector.getAllMethod();
-        }
+    public List<Agent> getAllMethod() {
+        return reflector.getAllMethod();
     }
 
     private boolean isInMethod(Agent invokers, Class<?>[] paramType) {
