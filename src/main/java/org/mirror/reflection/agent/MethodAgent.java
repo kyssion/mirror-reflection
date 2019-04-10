@@ -65,4 +65,8 @@ public class MethodAgent implements Agent {
     public Annotation[] getAllAnnotation() {
         return this.annotations;
     }
+
+    public Method getMethod(){
+        return this.method;
+    }
 }

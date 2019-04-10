@@ -196,7 +196,7 @@ public class MirrorClass {
             MirrorClass mirrorProp = metaClassForProperty(prop);
             return mirrorProp.getMethod(prop.getChildren(),paramType);
         }else {
-            List<Agent> allMethod = reflector.getMethod(name);
+            List<MethodAgent> allMethod = reflector.getMethod(name);
             for (Agent agent : allMethod) {
                 if (isInMethod(agent, paramType)) {
                     return agent;
@@ -206,7 +206,7 @@ public class MirrorClass {
         }
     }
 
-    public List<Agent> getAllMethod() {
+    public List<MethodAgent> getAllMethod() {
         return reflector.getAllMethod();
     }
 

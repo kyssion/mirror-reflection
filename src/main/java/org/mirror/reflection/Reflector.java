@@ -23,8 +23,8 @@ public class Reflector {
     private final Map<Class<?>,Annotation> annotations=new HashMap<>();
     private final String[] readablePropertyNames;
     private final String[] writeablePropertyNames;
-    private final Map<String, List<Agent>> allMethodMap = new HashMap<>();
-    private final List<Agent> allmethodArr = new ArrayList<>();
+    private final Map<String, List<MethodAgent>> allMethodMap = new HashMap<>();
+    private final List<MethodAgent> allmethodArr = new ArrayList<>();
     private final Map<String, Agent> setMethods = new HashMap<>();
     private final Map<String, Agent> getMethods = new HashMap<>();
     private final Map<String, Class<?>> setTypes = new HashMap<>();
@@ -196,16 +196,16 @@ public class Reflector {
             String name = method.getName();
             addInvoice(allMethodMap, name, method);
         }
-        for (Map.Entry<String,List<Agent>> item : allMethodMap.entrySet()){
+        for (Map.Entry<String,List<MethodAgent>> item : allMethodMap.entrySet()){
             this.allmethodArr.addAll(item.getValue());
         }
     }
 
-    private void addInvoice(Map<String, List<Agent>> conflictingSetters, String name, Method method) {
+    private void addInvoice(Map<String, List<MethodAgent>> conflictingSetters, String name, Method method) {
         if (!conflictingSetters.containsKey(name)) {
             conflictingSetters.put(name, new ArrayList<>());
         }
-        Agent agent = new MethodAgent(method);
+        MethodAgent agent = new MethodAgent(method);
         conflictingSetters.get(name).add(agent);
     }
 
@@ -578,15 +578,15 @@ public class Reflector {
         return otherConstructor;
     }
 
-    public List<Agent> getMethod(String methodName) {
-        List<Agent> agents = allMethodMap.get(methodName);
+    public List<MethodAgent> getMethod(String methodName) {
+        List<MethodAgent> agents = allMethodMap.get(methodName);
         if (agents==null||agents.size()==0){
             throw new ReflectionException("There is no method for method named '" + methodName + "'");
         }
         return allMethodMap.get(methodName);
     }
 
-    public List<Agent> getAllMethod(){
+    public List<MethodAgent> getAllMethod(){
         return this.allmethodArr;
     }
 }
