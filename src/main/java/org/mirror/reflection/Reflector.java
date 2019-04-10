@@ -20,7 +20,7 @@ import java.util.Map.Entry;
 public class Reflector {
 
     private final Class<?> type;
-    private final Map<Annotation,Annotation> annotations=new HashMap<>();
+    private final Map<Class<?>,Annotation> annotations=new HashMap<>();
     private final String[] readablePropertyNames;
     private final String[] writeablePropertyNames;
     private final Map<String, List<Agent>> allMethod = new HashMap<>();
@@ -54,15 +54,15 @@ public class Reflector {
         }
     }
 
-    public Annotation getAnnotation(Annotation annotation) {
+    public Annotation getAnnotation(Class<?> annotation) {
         return annotations.get(annotation);
     }
 
     private void addAnnotation(Class<?> clazz) {
-        Map<Annotation,Annotation> map = new HashMap<>();
+        Map<Class<?>,Annotation> map = new HashMap<>();
         Annotation[] annotations = clazz.getAnnotations();
         for(Annotation ann: annotations){
-            this.annotations.put(ann,ann);
+            this.annotations.put(ann.getClass(),ann);
         }
     }
 

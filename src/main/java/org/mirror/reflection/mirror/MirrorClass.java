@@ -41,7 +41,7 @@ public class MirrorClass {
         return new MirrorClass(type, new DefaultReflectorFactory());
     }
 
-    public Annotation getAnnotation(Annotation annotation){
+    public Annotation getAnnotation(Class<?> annotation){
         return this.reflector.getAnnotation(annotation);
     }
 
