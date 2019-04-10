@@ -23,7 +23,8 @@ public class Reflector {
     private final Map<Class<?>,Annotation> annotations=new HashMap<>();
     private final String[] readablePropertyNames;
     private final String[] writeablePropertyNames;
-    private final Map<String, List<Agent>> allMethod = new HashMap<>();
+    private final Map<String, List<Agent>> allMethodMap = new HashMap<>();
+    private final List<Agent> allmethodArr = new ArrayList<>();
     private final Map<String, Agent> setMethods = new HashMap<>();
     private final Map<String, Agent> getMethods = new HashMap<>();
     private final Map<String, Class<?>> setTypes = new HashMap<>();
@@ -193,7 +194,10 @@ public class Reflector {
         Method[] methods = getClassMethods(cls);
         for (Method method : methods) {
             String name = method.getName();
-            addInvoice(allMethod, name, method);
+            addInvoice(allMethodMap, name, method);
+        }
+        for (Map.Entry<String,List<Agent>> item : allMethodMap.entrySet()){
+            this.allmethodArr.addAll(item.getValue());
         }
     }
 
@@ -575,10 +579,14 @@ public class Reflector {
     }
 
     public List<Agent> getMethod(String methodName) {
-        List<Agent> agents = allMethod.get(methodName);
+        List<Agent> agents = allMethodMap.get(methodName);
         if (agents==null||agents.size()==0){
             throw new ReflectionException("There is no method for method named '" + methodName + "'");
         }
-        return allMethod.get(methodName);
+        return allMethodMap.get(methodName);
+    }
+
+    public List<Agent> getAllMethod(){
+        return this.allmethodArr;
     }
 }

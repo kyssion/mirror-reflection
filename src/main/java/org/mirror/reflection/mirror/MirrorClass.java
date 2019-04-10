@@ -41,8 +41,8 @@ public class MirrorClass {
         return new MirrorClass(type, new DefaultReflectorFactory());
     }
 
-    public Annotation getAnnotation(Class<?> annotation){
-        return this.reflector.getAnnotation(annotation);
+    public <T> T getAnnotation(Class<T> annotation){
+        return (T) this.reflector.getAnnotation(annotation);
     }
 
     //通过名称获取本身的一个field的MetaClass
@@ -203,6 +203,16 @@ public class MirrorClass {
                 }
             }
             throw new ReflectionException("There is no method for method named '" + name + "'");
+        }
+    }
+
+    public List<Agent> getAllMethod(String name) {
+        PropertyTokenizer prop = new PropertyTokenizer(name);
+        if(prop.hasNext()){
+            MirrorClass mirrorProp = metaClassForProperty(prop);
+            return mirrorProp.getAllMethod(prop.getChildren());
+        }else {
+            return reflector.getAllMethod();
         }
     }
 
