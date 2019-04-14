@@ -23,6 +23,8 @@ public class ArrTest {
         Method method = T.getDeclaredMethod("hhh",new Class[]{});
 
         Type type = TypeParameterProcessor.processorReturnType(method);
+        Class ttt = (Class) type;
+
     }
 }
 class ItemArr{
