@@ -1,6 +1,6 @@
 package org.example;
 
-import org.mirror.reflection.property.TypeParameterResolver;
+import org.mirror.reflection.property.TypeParameterProcessor;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -15,7 +15,7 @@ public class TypeRest {
 //        Method testArr = itemClass.getMethod("testArr",new Class[]{Object.class});
 
         Type test1Return = test1.getReturnType();
-        Type type  = TypeParameterResolver.resolveReturnType(test1,test1Return);
+        Type type  = TypeParameterProcessor.processorReturnType(test1,test1Return);
     }
 }
 

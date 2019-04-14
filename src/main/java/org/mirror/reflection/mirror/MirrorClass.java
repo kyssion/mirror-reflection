@@ -7,7 +7,7 @@ import org.mirror.reflection.agent.Agent;
 import org.mirror.reflection.agent.GetFieldAgent;
 import org.mirror.reflection.agent.MethodAgent;
 import org.mirror.reflection.property.PropertyTokenizer;
-import org.mirror.reflection.property.TypeParameterResolver;
+import org.mirror.reflection.property.TypeParameterProcessor;
 import org.mirror.reflection.util.TypeEnum;
 import org.mirror.reflection.exception.ReflectionException;
 
@@ -130,12 +130,12 @@ public class MirrorClass {
                 Field _method = MethodAgent.class.getDeclaredField("method");
                 _method.setAccessible(true);
                 Method method = (Method) _method.get(agent);
-                return TypeParameterResolver.resolveReturnType(method, reflector.getType());
+                return TypeParameterProcessor.processorReturnType(method, reflector.getType());
             } else if (agent instanceof GetFieldAgent) {
                 Field _field = GetFieldAgent.class.getDeclaredField("field");
                 _field.setAccessible(true);
                 Field field = (Field) _field.get(agent);
-                return TypeParameterResolver.resolveFieldType(field, reflector.getType());
+                return TypeParameterProcessor.processorFieldType(field, reflector.getType());
             }
         } catch (NoSuchFieldException | IllegalAccessException ignored) {
         }

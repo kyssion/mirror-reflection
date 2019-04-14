@@ -7,7 +7,7 @@ import org.mirror.reflection.agent.Agent;
 import org.mirror.reflection.agent.MethodAgent;
 import org.mirror.reflection.agent.SetFieldAgent;
 import org.mirror.reflection.property.PropertyNamer;
-import org.mirror.reflection.property.TypeParameterResolver;
+import org.mirror.reflection.property.TypeParameterProcessor;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
@@ -164,7 +164,7 @@ public class Reflector {
         if (isValidPropertyName(name)) {
             getMethods.put(name, new MethodAgent(method));
             //TODO 以后细看,这个东西涉及到java的类型体系,一篇博客https://www.jianshu.com/p/e8eeff12c306
-            Type returnType = TypeParameterResolver.resolveReturnType(method, type);
+            Type returnType = TypeParameterProcessor.processorReturnType(method, type);
             getTypes.put(name, typeToClass(returnType));
         }
     }
@@ -294,7 +294,7 @@ public class Reflector {
     private void addSetMethod(String name, Method method) {
         if (isValidPropertyName(name)) {
             setMethods.put(name, new MethodAgent(method));
-            Type[] paramTypes = TypeParameterResolver.resolveParamTypes(method, type);
+            Type[] paramTypes = TypeParameterProcessor.processorParamTypes(method, type);
             setTypes.put(name, typeToClass(paramTypes[0]));
         }
     }
@@ -362,7 +362,7 @@ public class Reflector {
     private void addSetField(Field field) {
         if (isValidPropertyName(field.getName())) {
             setMethods.put(field.getName(), new SetFieldAgent(field));
-            Type fieldType = TypeParameterResolver.resolveFieldType(field, type);
+            Type fieldType = TypeParameterProcessor.processorFieldType(field, type);
             setTypes.put(field.getName(), typeToClass(fieldType));
         }
     }
@@ -375,7 +375,7 @@ public class Reflector {
     private void addGetField(Field field) {
         if (isValidPropertyName(field.getName())) {
             getMethods.put(field.getName(), new GetFieldAgent(field));
-            Type fieldType = TypeParameterResolver.resolveFieldType(field, type);
+            Type fieldType = TypeParameterProcessor.processorFieldType(field, type);
             getTypes.put(field.getName(), typeToClass(fieldType));
         }
     }

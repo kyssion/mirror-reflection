@@ -1,9 +1,13 @@
 package org.example;
 
 import org.mirror.reflection.mirror.MirrorObject;
+import org.mirror.reflection.property.TypeParameterProcessor;
+
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 
 public class ArrTest {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoSuchMethodException {
 
         ItemArr itemArr = new ItemArr();
         Item[] items = new Item[10];
@@ -15,6 +19,10 @@ public class ArrTest {
         System.out.println(mirrorObject.getValue("items[0]",Item.class).age);
         Class<?> i = items.getClass();
         System.out.println(i==Item.class);
+        Class T = TestT.class;
+        Method method = T.getDeclaredMethod("hhh",new Class[]{});
+
+        Type type = TypeParameterProcessor.processorReturnType(method);
     }
 }
 class ItemArr{
@@ -26,5 +34,11 @@ class Item{
     public Item(String name,String age){
         this.name = name;
         this.age = age;
+    }
+}
+
+class TestT{
+    String hhh(){
+        return "";
     }
 }

@@ -6,23 +6,35 @@ import java.util.Arrays;
 /**
  * 针对java类型体系的特殊封装
  */
-public class TypeParameterResolver {
+public class TypeParameterProcessor {
 
-    public static Type resolveFieldType(Field field, Type srcType) {
+    public static Type processorFieldType(Field field) {
+        return processorFieldType(field,field.getDeclaringClass());
+    }
+
+    public static Type processorReturnType(Method method) {
+        return processorReturnType(method,method.getDeclaringClass());
+    }
+
+    public static Type[] processorParamTypes(Method method) {
+        return processorParamTypes(method,method.getDeclaringClass());
+    }
+
+    public static Type processorFieldType(Field field, Type srcType) {
         Type fieldType = field.getGenericType();
         //返回这个field包裹对象是谁
         Class<?> declaringClass = field.getDeclaringClass();
         return resolveType(fieldType, srcType, declaringClass);
     }
 
-    public static Type resolveReturnType(Method method, Type srcType) {
+    public static Type processorReturnType(Method method, Type srcType) {
         Type returnType = method.getGenericReturnType();
         //返回这个方法对应的声明对对对象
         Class<?> declaringClass = method.getDeclaringClass();
         return resolveType(returnType, srcType, declaringClass);
     }
 
-    public static Type[] resolveParamTypes(Method method, Type srcType) {
+    public static Type[] processorParamTypes(Method method, Type srcType) {
         Type[] paramTypes = method.getGenericParameterTypes();
         Class<?> declaringClass = method.getDeclaringClass();
         Type[] result = new Type[paramTypes.length];
@@ -121,12 +133,14 @@ public class TypeParameterResolver {
             return Object.class;
         }
 
+        //处理这种情况 class xxx extends ppp<String>
         Type superclass = clazz.getGenericSuperclass();
         result = scanSuperTypes(typeVar, srcType, declaringClass, clazz, superclass);
         if (result != null) {
             return result;
         }
 
+        //处理这种情况 class xxx implement ppp<String>
         Type[] superInterfaces = clazz.getGenericInterfaces();
         for (Type superInterface : superInterfaces) {
             result = scanSuperTypes(typeVar, srcType, declaringClass, clazz, superInterface);
@@ -182,7 +196,7 @@ public class TypeParameterResolver {
         return noChange ? parentType : new ParameterizedTypeImpl((Class<?>) parentType.getRawType(), null, newParentArgs);
     }
 
-    private TypeParameterResolver() {
+    private TypeParameterProcessor() {
         super();
     }
 
