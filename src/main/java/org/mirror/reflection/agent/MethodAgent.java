@@ -5,6 +5,8 @@ import org.mirror.reflection.Reflector;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MethodAgent implements Agent {
 
@@ -13,12 +15,16 @@ public class MethodAgent implements Agent {
     private final Class<?>[] paramType;
     private final Method method;
     private final Annotation[] annotations;
+    private final Map<Class<?>,Annotation> annotationMap=new HashMap<>();
 
     public MethodAgent(Method method) {
         this.method = method;
         paramType= method.getParameterTypes();
         returnType = method.getReturnType();
         this.annotations = method.getAnnotations();
+        for(Annotation annotation:annotations){
+            this.annotationMap.put(annotation.getClass(),annotation);
+        }
         if (paramType.length == 1) {
             type = paramType[0];
         } else {
@@ -65,6 +71,11 @@ public class MethodAgent implements Agent {
     public Annotation[] getAllAnnotation() {
         return this.annotations;
     }
+
+    public Annotation getAnnotation(Class<?> typeClass){
+        return this.annotationMap.get(typeClass);
+    }
+
 
     public Method getMethod(){
         return this.method;
