@@ -72,8 +72,8 @@ public class MethodAgent implements Agent {
         return this.annotations;
     }
 
-    public Annotation getAnnotation(Class<?> typeClass){
-        return this.annotationMap.get(typeClass);
+    public <T> T getAnnotation(Class<T> typeClass){
+        return (T) this.annotationMap.get(typeClass);
     }
 
 
