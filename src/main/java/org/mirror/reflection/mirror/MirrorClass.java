@@ -255,4 +255,8 @@ public class MirrorClass {
         return this.reflector.getType();
     }
 
+    public boolean isInferface(){
+        return this.reflector.isInterface();
+    }
+
 }

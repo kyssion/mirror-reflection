@@ -589,4 +589,8 @@ public class Reflector {
     public List<MethodAgent> getAllMethod(){
         return this.allmethodArr;
     }
+
+    public boolean isInterface() {
+        return this.type.isInterface();
+    }
 }
