@@ -593,4 +593,12 @@ public class Reflector {
     public boolean isInterface() {
         return this.type.isInterface();
     }
+
+    public String getClassName() {
+        return this.type.getName();
+    }
+
+    public boolean hasAnnotation(Class<?> annotationClass) {
+        return this.annotations.containsKey(annotationClass);
+    }
 }

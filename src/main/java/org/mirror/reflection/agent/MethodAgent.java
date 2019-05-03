@@ -80,4 +80,8 @@ public class MethodAgent implements Agent {
     public Method getMethod(){
         return this.method;
     }
+
+    public String getMethodName(){
+        return this.method.getName();
+    }
 }

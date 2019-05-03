@@ -44,6 +44,10 @@ public class MirrorClass {
         return (T) this.reflector.getAnnotation(annotation);
     }
 
+    public boolean hasAnnotation(Class<?> annotationClass){
+        return this.reflector.hasAnnotation(annotationClass);
+    }
+
     //通过名称获取本身的一个field的MetaClass
     public MirrorClass metaClassForProperty(String name) {
         Class<?> propType = reflector.getGetterType(name);
@@ -259,4 +263,8 @@ public class MirrorClass {
         return this.reflector.isInterface();
     }
 
+
+    public String getClassName() {
+        return this.reflector.getClassName();
+    }
 }
