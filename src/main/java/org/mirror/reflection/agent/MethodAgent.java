@@ -15,15 +15,15 @@ public class MethodAgent implements Agent {
     private final Class<?>[] paramType;
     private final Method method;
     private final Annotation[] annotations;
-    private final Map<Class<?>,Annotation> annotationMap=new HashMap<>();
+    private final Map<Class<?>, Annotation> annotationMap = new HashMap<>();
 
     public MethodAgent(Method method) {
         this.method = method;
-        paramType= method.getParameterTypes();
+        paramType = method.getParameterTypes();
         returnType = method.getReturnType();
         this.annotations = method.getAnnotations();
-        for(Annotation annotation:annotations){
-            this.annotationMap.put(annotation.getClass(),annotation);
+        for (Annotation annotation : annotations) {
+            this.annotationMap.put(annotation.getClass(), annotation);
         }
         if (paramType.length == 1) {
             type = paramType[0];
@@ -31,15 +31,17 @@ public class MethodAgent implements Agent {
             type = returnType;
         }
     }
+
     /**
      * 针对java9+ 对反射的控制,使用canControlMemberAccessible进行反射能力的检查和校验
+     *
      * @param target
      * @param args
      * @return
      * @throws IllegalAccessException
      */
     @Override
-    public Object invoke(Object target, Object...args) throws IllegalAccessException, InvocationTargetException {
+    public Object invoke(Object target, Object... args) throws IllegalAccessException, InvocationTargetException {
         try {
             return method.invoke(target, args);
         } catch (IllegalAccessException e) {
@@ -72,16 +74,21 @@ public class MethodAgent implements Agent {
         return this.annotations;
     }
 
-    public <T> T getAnnotation(Class<T> typeClass){
+    public <T> T getAnnotation(Class<T> typeClass) {
         return (T) this.annotationMap.get(typeClass);
     }
 
+    public boolean hasAnnotation(Class<?> typeClass) {
+        return this.annotationMap.containsKey(typeClass);
+    }
 
-    public Method getMethod(){
+    public Method getMethod() {
         return this.method;
     }
 
-    public String getMethodName(){
+    public String getMethodName() {
         return this.method.getName();
     }
+
+
 }
