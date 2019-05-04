@@ -5,6 +5,7 @@ import org.mirror.reflection.Reflector;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -90,5 +91,11 @@ public class MethodAgent implements Agent {
         return this.method.getName();
     }
 
+    public int getMethodParamCount(){
+        return this.method.getParameterCount();
+    }
 
+    public Parameter[] getParams(){
+        return this.method.getParameters();
+    }
 }
