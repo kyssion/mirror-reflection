@@ -2,13 +2,8 @@ package org.mirror.reflection.wrapper;
 
 
 import org.mirror.reflection.mirror.MirrorObject;
-import org.mirror.reflection.exception.ReflectionException;
-import org.mirror.reflection.property.ArrayTypeParameterProcessor;
+import org.mirror.reflection.property.CollectionTypeParameterProcessor;
 import org.mirror.reflection.property.PropertyTokenizer;
-
-import java.util.List;
-import java.util.Map;
-
 
 
 public abstract class BaseWrapper implements ObjectWrapper {
@@ -63,7 +58,7 @@ public abstract class BaseWrapper implements ObjectWrapper {
 //                throw new ReflectionException("The '" + prop.getName() + "' property of " + collection + " is not a List or Array.");
 //            }
 //        }
-        return ArrayTypeParameterProcessor.getValueFromCollection(prop.getIndex(),collection);
+        return CollectionTypeParameterProcessor.getValueFromCollection(prop.getIndex(),collection);
     }
 
     /**
@@ -102,6 +97,6 @@ public abstract class BaseWrapper implements ObjectWrapper {
 //                throw new ReflectionException("The '" + prop.getName() + "' property of " + collection + " is not a List or Array.");
 //            }
 //        }
-        ArrayTypeParameterProcessor.setValueToCollection(prop.getIndex(),collection,value);
+        CollectionTypeParameterProcessor.setValueToCollection(prop.getIndex(),collection,value);
     }
 }

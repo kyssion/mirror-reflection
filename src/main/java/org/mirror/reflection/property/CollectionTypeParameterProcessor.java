@@ -5,7 +5,7 @@ import org.mirror.reflection.exception.ReflectionException;
 import java.util.List;
 import java.util.Map;
 
-public class ArrayTypeParameterProcessor {
+public class CollectionTypeParameterProcessor {
     public static int collectionSize(Object collection){
         if (collection instanceof Map) {
             return ((Map) collection).size();
