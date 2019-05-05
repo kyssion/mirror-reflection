@@ -24,7 +24,7 @@ public class MethodAgent implements Agent {
         returnType = method.getReturnType();
         this.annotations = method.getAnnotations();
         for (Annotation annotation : annotations) {
-            this.annotationMap.put(annotation.getClass(), annotation);
+            this.annotationMap.put(annotation.annotationType(), annotation);
         }
         if (paramType.length == 1) {
             type = paramType[0];
