@@ -15,8 +15,6 @@
  */
 package org.mirror.reflection.io;
 
-import org.apache.ibatis.logging.Log;
-import org.apache.ibatis.logging.LogFactory;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
@@ -38,7 +36,7 @@ import java.util.Set;
  * methods.</p>
  *
  * <p>General searches are initiated by calling the
- * {@link #find(org.apache.ibatis.io.ResolverUtil.Test, String)} ()} method and supplying
+ * {@link #find(org.mirror.reflection.io.ResolverUtil.Test, String)} ()} method and supplying
  * a package name and a Test instance. This will cause the named package <b>and all sub-packages</b>
  * to be scanned for classes that meet the test. There are also utility methods for the common
  * use cases of scanning multiple packages for extensions of particular classes, or classes
@@ -57,10 +55,6 @@ import java.util.Set;
  * @author Tim Fennell
  */
 public class ResolverUtil<T> {
-  /*
-   * An instance of Log to use for logging in this class.
-   */
-  private static final Log log = LogFactory.getLog(ResolverUtil.class);
 
   /**
    * A simple interface that specifies how to test classes to determine if they
@@ -224,7 +218,6 @@ public class ResolverUtil<T> {
         }
       }
     } catch (IOException ioe) {
-      log.error("Could not read package: " + packageName, ioe);
     }
 
     return this;
@@ -252,17 +245,13 @@ public class ResolverUtil<T> {
     try {
       String externalName = fqn.substring(0, fqn.indexOf('.')).replace('/', '.');
       ClassLoader loader = getClassLoader();
-      if (log.isDebugEnabled()) {
-        log.debug("Checking to see if class " + externalName + " matches criteria [" + test + "]");
-      }
 
       Class<?> type = loader.loadClass(externalName);
       if (test.matches(type)) {
         matches.add((Class<T>) type);
       }
     } catch (Throwable t) {
-      log.warn("Could not examine class '" + fqn + "'" + " due to a " +
-          t.getClass().getName() + " with message: " + t.getMessage());
+      return;
     }
   }
 }

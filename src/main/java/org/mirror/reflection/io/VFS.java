@@ -15,9 +15,6 @@
  */
 package org.mirror.reflection.io;
 
-import org.apache.ibatis.logging.Log;
-import org.apache.ibatis.logging.LogFactory;
-
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -33,10 +30,9 @@ import java.util.List;
  * @author Ben Gunter
  */
 public abstract class VFS {
-  private static final Log log = LogFactory.getLog(VFS.class);
 
   /** The built-in implementations. */
-  public static final Class<?>[] IMPLEMENTATIONS = { JBoss6VFS.class, DefaultVFS.class };
+  public static final Class<?>[] IMPLEMENTATIONS = { DefaultVFS.class };
 
   /** The list to which implementations are added by {@link #addImplClass(Class)}. */
   public static final List<Class<? extends VFS>> USER_IMPLEMENTATIONS = new ArrayList<>();
@@ -59,22 +55,13 @@ public abstract class VFS {
         try {
           vfs = impl.newInstance();
           if (vfs == null || !vfs.isValid()) {
-            if (log.isDebugEnabled()) {
-              log.debug("VFS implementation " + impl.getName() +
-                  " is not valid in this environment.");
-            }
+
           }
         } catch (InstantiationException e) {
-          log.error("Failed to instantiate " + impl, e);
           return null;
         } catch (IllegalAccessException e) {
-          log.error("Failed to instantiate " + impl, e);
           return null;
         }
-      }
-
-      if (log.isDebugEnabled()) {
-        log.debug("Using VFS adapter " + vfs.getClass().getName());
       }
 
       return vfs;
@@ -107,9 +94,6 @@ public abstract class VFS {
       return Thread.currentThread().getContextClassLoader().loadClass(className);
 //      return ReflectUtil.findClass(className);
     } catch (ClassNotFoundException e) {
-      if (log.isDebugEnabled()) {
-        log.debug("Class not found: " + className);
-      }
       return null;
     }
   }
@@ -128,10 +112,8 @@ public abstract class VFS {
     try {
       return clazz.getMethod(methodName, parameterTypes);
     } catch (SecurityException e) {
-      log.error("Security exception looking for method " + clazz.getName() + "." + methodName + ".  Cause: " + e);
       return null;
     } catch (NoSuchMethodException e) {
-      log.error("Method not found " + clazz.getName() + "." + methodName + "." + methodName + ".  Cause: " + e);
       return null;
     }
   }
