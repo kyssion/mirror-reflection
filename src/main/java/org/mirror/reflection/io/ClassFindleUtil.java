@@ -25,7 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class ClassItemFindleUtil<T> {
+public class ClassFindleUtil<T> {
 
     private Set<Class<? extends T>> matches = new HashSet<>();
 
@@ -49,7 +49,7 @@ public class ClassItemFindleUtil<T> {
      * @param packageNames
      * @return
      */
-    public ClassItemFindleUtil<T> findImplementations(Class<?> parent, String... packageNames) {
+    public ClassFindleUtil<T> findImplementations(Class<?> parent, String... packageNames) {
         if (packageNames == null) {
             return this;
         }
@@ -68,7 +68,7 @@ public class ClassItemFindleUtil<T> {
      * @param packageNames
      * @return
      */
-    public ClassItemFindleUtil<T> findAnnotated(Class<? extends Annotation> annotation, String... packageNames) {
+    public ClassFindleUtil<T> findAnnotated(Class<? extends Annotation> annotation, String... packageNames) {
         if (packageNames == null) {
             return this;
         }
@@ -87,7 +87,7 @@ public class ClassItemFindleUtil<T> {
      * @param packageName
      * @return
      */
-    public ClassItemFindleUtil<T> find(Test test, String packageName) {
+    public ClassFindleUtil<T> find(Test test, String packageName) {
         String path = getPackagePath(packageName);
 
         try {
