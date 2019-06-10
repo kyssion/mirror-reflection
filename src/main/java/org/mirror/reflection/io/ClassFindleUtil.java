@@ -1,18 +1,3 @@
-/**
- * Copyright 2009-2019 the original author or authors.
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.mirror.reflection.io;
 
 
@@ -45,6 +30,7 @@ public class ClassFindleUtil<T> {
 
     /**
      * 通过接口搜索
+     *
      * @param parent
      * @param packageNames
      * @return
@@ -53,17 +39,16 @@ public class ClassFindleUtil<T> {
         if (packageNames == null) {
             return this;
         }
-
         Test test = new IsA(parent);
         for (String pkg : packageNames) {
             find(test, pkg);
         }
-
         return this;
     }
 
     /**
      * 通过注解搜索
+     *
      * @param annotation
      * @param packageNames
      * @return
@@ -83,23 +68,24 @@ public class ClassFindleUtil<T> {
 
     /**
      * 通过类搜索
+     *
      * @param test
      * @param packageName
      * @return
      */
-    public ClassFindleUtil<T> find(Test test, String packageName) {
-        String path = getPackagePath(packageName);
-
-        try {
-            List<String> children = VFS.getInstance().list(path);
-            for (String child : children) {
-                if (child.endsWith(".class")) {
-                    addIfMatching(test, child);
+    public ClassFindleUtil<T> find(Test test, String...packageName) {
+        for (String pathItem : packageName) {
+            String path = getPackagePath(pathItem);
+            try {
+                List<String> children = VFS.getInstance().list(path);
+                for (String child : children) {
+                    if (child.endsWith(".class")) {
+                        addIfMatching(test, child);
+                    }
                 }
+            } catch (IOException ioe) {
             }
-        } catch (IOException ioe) {
         }
-
         return this;
     }
 
