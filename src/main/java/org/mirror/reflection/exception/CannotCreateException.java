@@ -1,6 +1,5 @@
 package org.mirror.reflection.exception;
 
-
 public class CannotCreateException extends Exception {
     private static final long serialVersionUID = 1L;
 

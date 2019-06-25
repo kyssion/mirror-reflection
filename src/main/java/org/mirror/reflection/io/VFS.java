@@ -53,14 +53,14 @@ public abstract class VFS {
       for (int i = 0; vfs == null || !vfs.isValid(); i++) {
         Class<? extends VFS> impl = impls.get(i);
         try {
-          vfs = impl.newInstance();
+          vfs = impl.getConstructor().newInstance();
           if (vfs == null || !vfs.isValid()) {
 
           }
-        } catch (InstantiationException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
           return null;
-        } catch (IllegalAccessException e) {
-          return null;
+        } catch (NoSuchMethodException | InvocationTargetException e) {
+          e.printStackTrace();
         }
       }
 
@@ -111,9 +111,7 @@ public abstract class VFS {
     }
     try {
       return clazz.getMethod(methodName, parameterTypes);
-    } catch (SecurityException e) {
-      return null;
-    } catch (NoSuchMethodException e) {
+    } catch (SecurityException | NoSuchMethodException e) {
       return null;
     }
   }
