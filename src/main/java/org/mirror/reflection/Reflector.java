@@ -20,7 +20,6 @@ import java.util.Map.Entry;
 public class Reflector {
 
     private final Class<?> type;
-    private final Map<Class<?>,Annotation> annotations=new HashMap<>();
     private final String[] readablePropertyNames;
     private final String[] writeablePropertyNames;
     private final Map<String, List<MethodAgent>> allMethodMap = new HashMap<>();
@@ -36,7 +35,6 @@ public class Reflector {
     public Reflector(Class<?> clazz) {
         type = clazz;
         //添加这个class的0参数构造方法
-        addAnnotation(clazz);
         addDefaultConstructor(clazz);
         addGetMethods(clazz);
         addSetMethods(clazz);
@@ -55,16 +53,9 @@ public class Reflector {
         }
     }
 
-    public Annotation getAnnotation(Class<?> annotation) {
-        return annotations.get(annotation);
-    }
-
-    private void addAnnotation(Class<?> clazz) {
-        Map<Class<?>,Annotation> map = new HashMap<>();
-        Annotation[] annotations = clazz.getAnnotations();
-        for(Annotation ann: annotations){
-            this.annotations.put(ann.getClass(),ann);
-        }
+    @SuppressWarnings("unchecked")
+    public <T extends Annotation> T getAnnotation(Class<T> annotation) {
+        return this.type.getAnnotation(annotation);
     }
 
 
@@ -596,9 +587,5 @@ public class Reflector {
 
     public String getClassName() {
         return this.type.getName();
-    }
-
-    public boolean hasAnnotation(Class<?> annotationClass) {
-        return this.annotations.containsKey(annotationClass);
     }
 }
