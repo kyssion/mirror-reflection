@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
 @interface Test{
-    public String id();
+    String id();
 }
 
 class Testddd{
