@@ -1,9 +1,6 @@
 package org.mirror.reflection.io;
 
-import com.sun.tools.javac.util.StringUtils;
-
 import java.io.File;
-import java.io.FileFilter;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.util.Enumeration;
@@ -12,7 +9,7 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-public class ClassUtill {
+public class ClassFindUtill {
 
     /**
      * 获取类加载器
@@ -66,7 +63,9 @@ public class ClassUtill {
                                     String jarEntryName = jarEntry.getName();
                                     if (jarEntryName.endsWith(".class")) {
                                         String className = jarEntryName.substring(0, jarEntryName.lastIndexOf(".")).replaceAll("/", ".");
-                                        doAddClass(classSet, className);
+                                        if(className.startsWith(packageName)){
+                                            doAddClass(classSet, className);
+                                        }
                                     }
                                 }
                             }
