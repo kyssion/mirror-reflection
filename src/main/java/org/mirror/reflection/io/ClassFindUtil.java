@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-public class ClassFindUtill {
+public class ClassFindUtil {
 
     /**
      * 获取类加载器
