@@ -75,6 +75,7 @@ public class MethodAgent implements Agent {
         return this.annotations;
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T getAnnotation(Class<T> typeClass) {
         return (T) this.annotationMap.get(typeClass);
     }
